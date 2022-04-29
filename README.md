@@ -37,4 +37,4 @@ Add the following in the dependencies tag：
 ## Example project
 ZTXChain Java SDK provides rich examples for developers' reference
 
-[Sample document entry](docs)
+[Sample document entry](/docs)
