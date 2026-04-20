@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.zetrix.SDK;
 import org.zetrix.common.ToBaseUnit;
 import org.zetrix.crypto.Keypair;
+import org.zetrix.encryption.model.KeyType;
 import org.zetrix.model.request.TransactionBuildBlobRequest;
 import org.zetrix.model.request.TransactionSignRequest;
 import org.zetrix.model.request.TransactionSubmitRequest;
@@ -20,6 +21,19 @@ import java.util.List;
 
 public class BatchCreateAccountDemo {
     SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+
+    /** Generate keypairs for all supported algorithms. */
+    @Test
+    public void generateMultiAlgorithmKeypairs() {
+        for (KeyType keyType : new KeyType[]{KeyType.ED25519, KeyType.SM2, KeyType.DILITHIUM3, KeyType.HYBRID}) {
+            Keypair keypair = Keypair.generator(keyType);
+            System.out.println(keyType + " address:    " + keypair.getAddress());
+            System.out.println(keyType + " publicKey:  " + keypair.getPublicKey());
+            System.out.println(keyType + " privateKey: " + keypair.getPrivateKey());
+            System.out.println();
+        }
+    }
+
     /**
      * 批量创建账户
      *

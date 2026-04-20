@@ -1,6 +1,7 @@
 package org.zetrix.model.request;
 
 import org.zetrix.model.request.operation.BaseOperation;
+import org.zetrix.model.response.result.data.Signature;
 
 import java.util.Arrays;
 
@@ -15,6 +16,11 @@ public class TransactionEvaluateFeeRequest {
     private int signatureNumber = 1;
     private Long ceilLedgerSeq;
     private String metadata;
+    // Scenario 2/4: pre-built blob (with optional signatures) for direct fee estimation
+    private String transactionBlob;
+    private Signature[] signatures;
+    // Scenario 1: private keys to sign a built blob for accurate two-step fee estimation
+    private String[] signatureKeys;
 
     /**
      * @Author riven
@@ -167,5 +173,29 @@ public class TransactionEvaluateFeeRequest {
      */
     public void setMetadata(String metadata) {
         this.metadata = metadata;
+    }
+
+    public String getTransactionBlob() {
+        return transactionBlob;
+    }
+
+    public void setTransactionBlob(String transactionBlob) {
+        this.transactionBlob = transactionBlob;
+    }
+
+    public Signature[] getSignatures() {
+        return signatures;
+    }
+
+    public void setSignatures(Signature[] signatures) {
+        this.signatures = signatures;
+    }
+
+    public String[] getSignatureKeys() {
+        return signatureKeys;
+    }
+
+    public void setSignatureKeys(String[] signatureKeys) {
+        this.signatureKeys = signatureKeys;
     }
 }

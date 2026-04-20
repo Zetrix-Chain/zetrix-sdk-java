@@ -11,6 +11,7 @@ import org.zetrix.crypto.protobuf.Chain;
 import org.zetrix.encryption.exception.EncException;
 import org.zetrix.encryption.key.PrivateKey;
 import org.zetrix.encryption.key.PublicKey;
+import org.zetrix.encryption.model.KeyType;
 import org.zetrix.exception.SDKException;
 import org.zetrix.exception.SdkError;
 import org.zetrix.model.request.*;
@@ -232,11 +233,15 @@ public class AccountServiceImpl implements AccountService {
      */
     @Override
     public AccountCreateResponse create() {
-        AccountCreateResponse accountCreateResponse = new AccountCreateResponse();
+        return create(KeyType.ED25519);
+    }
 
+    @Override
+    public AccountCreateResponse create(KeyType keyType) {
+        AccountCreateResponse accountCreateResponse = new AccountCreateResponse();
         AccountCreateResult accountCreateResult = new AccountCreateResult();
         try {
-            PrivateKey privateKey = new PrivateKey();
+            PrivateKey privateKey = new PrivateKey(keyType != null ? keyType : KeyType.ED25519);
             accountCreateResult.setPrivateKey(privateKey.getEncPrivateKey());
             accountCreateResult.setPublicKey(privateKey.getEncPublicKey());
             accountCreateResult.setAddress(privateKey.getEncAddress());

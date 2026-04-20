@@ -2,6 +2,7 @@ package org.zetrix.crypto;
 
 
 import org.zetrix.encryption.key.PrivateKey;
+import org.zetrix.encryption.model.KeyType;
 
 public class Keypair {
     private String address;
@@ -15,8 +16,12 @@ public class Keypair {
     }
 
     public static Keypair generator() {
+        return generator(KeyType.ED25519);
+    }
+
+    public static Keypair generator(KeyType keyType) {
         try {
-            PrivateKey keyPair = new PrivateKey();
+            PrivateKey keyPair = new PrivateKey(keyType);
             return new Keypair(keyPair.getEncAddress(), keyPair.getEncPublicKey(), keyPair.getEncPrivateKey());
         } catch (Exception e) {
             e.printStackTrace();
