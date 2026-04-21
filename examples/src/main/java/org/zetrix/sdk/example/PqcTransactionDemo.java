@@ -27,14 +27,18 @@ public class PqcTransactionDemo {
     private static final String NODE_URL        = "https://test-node.zetrix.com";
     private static final String SPONSOR_ADDRESS = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
     private static final String SPONSOR_KEY     = "YOUR_PRIVATE_KEY";
-    private static final long   INIT_BALANCE    = ToBaseUnit.ToUGas("0.1");
+    private static final long   INIT_BALANCE    = 1000000000L; // 1 Gas in uGas
 
-    // Minimal JS contract — query returns its input unchanged
     private static final String CONTRACT_PAYLOAD =
-        "'use strict';" +
-        "function init(bar){}" +
-        "function main(input_str){let input=JSON.parse(input_str);if(input.do_foo){}}" +
-        "function query(input_str){return input_str;}";
+        "'use strict';\n" +
+        "function init(bar) {\n  return;\n}\n\n" +
+        "function main(input) {\n" +
+        "  let para = JSON.parse(input);\n" +
+        "  if (para.do_foo) {\n" +
+        "    let x = { 'hello': 'world' };\n" +
+        "  }\n" +
+        "}\n\n" +
+        "function query(input) {\n  return input;\n}";
 
     SDK sdk = SDK.getInstance(NODE_URL);
 
@@ -138,10 +142,20 @@ public class PqcTransactionDemo {
         if (activateHash == null) return;
         System.out.println("Activation hash: " + activateHash);
 
+        if (!waitForTx(activateHash)) {
+            System.out.println("Activation tx not confirmed, aborting");
+            return;
+        }
+
         // Step 2: deploy contract from PQC account
         String createHash = deployContract(kp.getAddress(), kp.getPrivateKey());
         if (createHash == null) return;
         System.out.println("Contract deploy hash: " + createHash);
+        if (!waitForTx(createHash)) {
+            System.out.println("Contract deploy tx not confirmed, aborting");
+            return;
+        }
+        System.out.println("Contract deploy confirmed: " + createHash);
 
         // Step 3: resolve deployed contract address
         String contractAddress = resolveContractAddress(createHash);
@@ -165,6 +179,11 @@ public class PqcTransactionDemo {
         String activateHash = activate(newAddress);
         if (activateHash == null) return null;
         System.out.println("Activation hash: " + activateHash);
+
+        if (!waitForTx(activateHash)) {
+            System.out.println("Activation tx not confirmed, aborting");
+            return null;
+        }
 
         long nonce = getNonce(newAddress);
         GasSendOperation sendOp = new GasSendOperation();
@@ -295,6 +314,7 @@ public class PqcTransactionDemo {
     private void queryContract(String contractAddress) {
         ContractCallRequest req = new ContractCallRequest();
         req.setContractAddress(contractAddress);
+        req.setFeeLimit(1000000000L);
         req.setOptType(2);
         req.setInput("{\"method\":\"query\",\"params\":{\"test\":\"pqc\"}}");
         ContractCallResponse resp = sdk.getContractService().call(req);
@@ -335,6 +355,24 @@ public class PqcTransactionDemo {
             return null;
         }
         return submitResp.getResult().getHash();
+    }
+
+    /** Poll getInfo until the tx is confirmed or 30 s elapses. Returns true if confirmed. */
+    private boolean waitForTx(String hash) {
+        TransactionGetInfoRequest req = new TransactionGetInfoRequest();
+        req.setHash(hash);
+        for (int i = 0; i < 15; i++) {
+            try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
+            TransactionGetInfoResponse resp = sdk.getTransactionService().getInfo(req);
+            Long count = resp.getErrorCode() == 0 && resp.getResult() != null
+                    ? resp.getResult().getTotalCount() : null;
+            if (count != null && count > 0) {
+                System.out.println("Tx confirmed: " + hash);
+                return true;
+            }
+        }
+        System.out.println("Tx not confirmed after 30s: " + hash);
+        return false;
     }
 
     private long getNonce(String address) {

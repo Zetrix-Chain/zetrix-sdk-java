@@ -245,7 +245,10 @@ public class TransactionServiceImpl implements TransactionService {
                 TestTx[] txs = feeResponse.getResult() != null ? feeResponse.getResult().getTxs() : null;
                 if (Tools.isEmpty(txs) || txs[0].getTransactionEnv() == null
                         || txs[0].getTransactionEnv().getTransactionFees() == null) {
-                    throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), "Fee estimation failed");
+                    String nodeError = (feeResponse.getErrorCode() != 0)
+                            ? " [node error " + feeResponse.getErrorCode() + ": " + feeResponse.getErrorDesc() + "]"
+                            : "";
+                    throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), "Fee estimation failed" + nodeError);
                 }
                 Long estimatedFeeLimit = txs[0].getTransactionEnv().getTransactionFees().getFeeLimit();
                 Long estimatedGasPrice = txs[0].getTransactionEnv().getTransactionFees().getGasPrice();
