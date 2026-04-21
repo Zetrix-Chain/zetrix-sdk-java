@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BatchCreateAccountDemo {
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     /** Generate keypairs for all supported algorithms. */
     @Test
