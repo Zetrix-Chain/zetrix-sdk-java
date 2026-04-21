@@ -48,6 +48,7 @@ public class EvaluateFeeDemo {
         request.setSourceAddress(SPONSOR_ADDRESS);
         request.setNonce(nonce + 1);
         request.addOperation(op);
+        request.setGasPrice(5L);
         request.setSignatureKeys(new String[]{SPONSOR_PRIVATE_KEY});
 
         TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);

@@ -21,6 +21,7 @@ public class TransactionEvaluateFeeRequest {
     private Signature[] signatures;
     // Scenario 1: private keys to sign a built blob for accurate two-step fee estimation
     private String[] signatureKeys;
+    private Long gasPrice;
 
     /**
      * @Author riven
@@ -197,5 +198,13 @@ public class TransactionEvaluateFeeRequest {
 
     public void setSignatureKeys(String[] signatureKeys) {
         this.signatureKeys = signatureKeys;
+    }
+
+    public Long getGasPrice() {
+        return gasPrice;
+    }
+
+    public void setGasPrice(Long gasPrice) {
+        this.gasPrice = gasPrice;
     }
 }

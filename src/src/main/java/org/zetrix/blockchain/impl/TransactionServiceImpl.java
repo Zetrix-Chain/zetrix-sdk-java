@@ -236,7 +236,9 @@ public class TransactionServiceImpl implements TransactionService {
                     }
                 }
                 // Step 1: estimate with feeLimit=0
-                byte[] tempBlobBytes = buildEvaluationBlob(transactionEvaluateFeeRequest, 0L, 1000L);
+                Long reqGasPrice = transactionEvaluateFeeRequest.getGasPrice();
+                long initGasPrice = (reqGasPrice != null && reqGasPrice > 0) ? reqGasPrice : 10L;
+                byte[] tempBlobBytes = buildEvaluationBlob(transactionEvaluateFeeRequest, 0L, initGasPrice);
                 Signature[] tempSigs = signBlobBytes(tempBlobBytes, signatureKeys);
                 TransactionEvaluateFeeResponse feeResponse = postBlobToTestTransaction(
                         HexFormat.byteToHex(tempBlobBytes), tempSigs);

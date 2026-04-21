@@ -176,6 +176,7 @@ public class PqcTransactionDemo {
         feeReq.setSourceAddress(newAddress);
         feeReq.setNonce(nonce + 1);
         feeReq.addOperation(sendOp);
+        feeReq.setGasPrice(5L);
         feeReq.setSignatureKeys(new String[]{newPrivateKey});
 
         TransactionEvaluateFeeResponse feeResp = sdk.getTransactionService().evaluateFee(feeReq);
@@ -209,7 +210,7 @@ public class PqcTransactionDemo {
         blobReq.setSourceAddress(SPONSOR_ADDRESS);
         blobReq.setNonce(sponsorNonce + 1);
         blobReq.setFeeLimit(ToBaseUnit.ToUGas("0.01"));
-        blobReq.setGasPrice(1000L);
+        blobReq.setGasPrice(5L);
         blobReq.addOperation(activateOp);
 
         TransactionBuildBlobResponse blobResp = sdk.getTransactionService().buildBlob(blobReq);
@@ -252,6 +253,7 @@ public class PqcTransactionDemo {
         feeReq.setSourceAddress(fromAddress);
         feeReq.setNonce(nonce + 1);
         feeReq.addOperation(createOp);
+        feeReq.setGasPrice(5L);
         feeReq.setSignatureKeys(new String[]{fromPrivateKey});
 
         TransactionEvaluateFeeResponse feeResp = sdk.getTransactionService().evaluateFee(feeReq);
@@ -308,13 +310,14 @@ public class PqcTransactionDemo {
         ContractInvokeByGasOperation invokeOp = new ContractInvokeByGasOperation();
         invokeOp.setSourceAddress(fromAddress);
         invokeOp.setContractAddress(contractAddress);
-        invokeOp.setGasAmount(0L);
+        invokeOp.setZtxAmount(0L);
         invokeOp.setInput("{\"method\":\"main\",\"params\":{\"do_foo\":false}}");
 
         TransactionEvaluateFeeRequest feeReq = new TransactionEvaluateFeeRequest();
         feeReq.setSourceAddress(fromAddress);
         feeReq.setNonce(nonce + 1);
         feeReq.addOperation(invokeOp);
+        feeReq.setGasPrice(5L);
         feeReq.setSignatureKeys(new String[]{fromPrivateKey});
 
         TransactionEvaluateFeeResponse feeResp = sdk.getTransactionService().evaluateFee(feeReq);
