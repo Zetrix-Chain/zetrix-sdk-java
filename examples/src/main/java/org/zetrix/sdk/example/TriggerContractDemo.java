@@ -16,7 +16,7 @@ import org.zetrix.model.response.result.data.*;
 public class TriggerContractDemo {
     public static SDK sdk;
     public static void main(String argv[]) {
-        String url = "http://192.168.10.100:19343";
+        String url = "https://test-node.zetrix.com";
         sdk = SDK.getInstance(url);
 
 //        long nonce = getAccountNonce();
@@ -40,7 +40,7 @@ public class TriggerContractDemo {
         long nonce = 0;
 
         // Init request
-        String accountAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String accountAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
@@ -56,7 +56,7 @@ public class TriggerContractDemo {
 
     public static BaseOperation[] buildOperations() {
         // The account address to issue apt1.0 token
-        String invokeAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String invokeAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // The contract address
         String contractAddress = "ZTX3dPvBNpB9teUmx5F3efcn2ox1DcRxBPmPu";
         // The destination address
@@ -87,7 +87,7 @@ public class TriggerContractDemo {
         String transactionBlob = null;
 
         // The account address to create contract and issue ctp 1.0 token
-        String senderAddresss = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddresss = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // The gasPrice is fixed at 1000L, the unit is UGas
         Long gasPrice = 1000L;
         // Set up the maximum cost 10.08Gas
@@ -116,7 +116,7 @@ public class TriggerContractDemo {
     public static Signature[] signTransaction(String transactionBlob) {
         Signature[] signatures = null;
         // The account private key to issue atp1.0 token
-        String senderPrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
 
         // Sign transaction BLob
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
@@ -169,7 +169,7 @@ public class TriggerContractDemo {
         // Contract address
         String contractAddress = "ZTX3dPvBNpB9teUmx5F3efcn2ox1DcRxBPmPu";
         // TokenOwner address
-        String tokenOwner = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String tokenOwner = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
 
         // Init input
         JSONObject input = new JSONObject();

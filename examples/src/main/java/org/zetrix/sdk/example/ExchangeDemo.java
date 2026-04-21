@@ -13,7 +13,7 @@ import org.zetrix.model.response.result.data.*;
 import org.junit.Test;
 
 public class ExchangeDemo {
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     /**
      * Check whether the nodes in the connection are block synchronously
@@ -38,7 +38,7 @@ public class ExchangeDemo {
      */
     @Test
     public void checkAccountAddress() {
-        String address = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String address = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
         accountCheckValidRequest.setAddress(address);
         AccountCheckValidResponse accountCheckValidResponse = sdk.getAccountService().checkValid(accountCheckValidRequest);
@@ -54,7 +54,7 @@ public class ExchangeDemo {
      */
     @Test
     public void getAccountInfo() {
-        String accountAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String accountAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetInfoRequest request = new AccountGetInfoRequest();
         request.setAddress(accountAddress);
 
@@ -68,7 +68,7 @@ public class ExchangeDemo {
      */
     @Test
     public void getAccountBalance() {
-        String accountAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String accountAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
 
@@ -85,7 +85,7 @@ public class ExchangeDemo {
      */
     @Test
     public void getAccountNonce() {
-        String accountAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String accountAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
@@ -104,9 +104,9 @@ public class ExchangeDemo {
     public void sendGas() throws Exception {
         // Init variable
         // The account private key to send gas
-        String senderPrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
         // The account address to receive gas
-        String destAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String destAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // The amount to be sent
         Long amount = ToBaseUnit.ToUGas("0.01");
         // The fixed write 1000L, the unit is UGas

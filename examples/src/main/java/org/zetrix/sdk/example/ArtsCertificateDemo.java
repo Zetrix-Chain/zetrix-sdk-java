@@ -15,7 +15,7 @@ import org.zetrix.model.response.result.data.*;
  * @date 2019/2/14 11:33
  */
 public class ArtsCertificateDemo {
-    static SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    static SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     /**
      * 该Demo完成了三个功能:
@@ -25,17 +25,17 @@ public class ArtsCertificateDemo {
      */
     public static void main(String[] argv) {
         // 用于创建新区块链账户的私钥
-        String activatePrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String activatePrivateKey = "YOUR_PRIVATE_KEY";
         // 给新账户的初始化资产
         Long initBalance = ToBaseUnit.ToUGas("1");
         // 艺术品证书ID
         String artCertificateId = "A112366544";
         // 艺术品证书所有人
-        String owner = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String owner = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // 艺术品信息
         String artInfo = "我的证书";
         // 修改艺术品证书所有人
-        String changeOwner = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String changeOwner = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
 
         // 生成一个新账户的信息
         AccountCreateResult newAccountInfo = generateAccountKeyPair();

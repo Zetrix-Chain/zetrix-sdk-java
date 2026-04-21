@@ -5,12 +5,11 @@ import org.zetrix.SDK;
 import org.zetrix.common.ToBaseUnit;
 import org.zetrix.crypto.Keypair;
 import org.zetrix.encryption.model.KeyType;
-import org.zetrix.model.request.TransactionEvaluateFeeRequest;
-import org.zetrix.model.request.TransactionSubmitRequest;
+import org.zetrix.model.request.*;
 import org.zetrix.model.request.operation.AccountActivateOperation;
-import org.zetrix.model.response.TransactionEvaluateFeeResponse;
-import org.zetrix.model.response.TransactionSubmitResponse;
-import org.zetrix.model.response.result.TransactionEvaluateFeeResult;
+import org.zetrix.model.request.operation.GasSendOperation;
+import org.zetrix.model.response.*;
+import org.zetrix.model.response.result.*;
 import org.zetrix.model.response.result.data.Signature;
 import org.junit.Test;
 
@@ -19,28 +18,26 @@ import org.junit.Test;
  *
  * Scenario 1 (signatureKeys): SDK builds blob, signs, estimates, rebuilds with real
  *   fees, re-signs, and returns a ready-to-submit blob+signatures.
- * Scenario 2/4 (transactionBlob ± signatures): caller provides a pre-built blob
- *   for direct fee estimation; useful for PQC key types where signing is done
- *   offline or by a separate key management system.
+ * Scenario 2/4 (transactionBlob + signatures): caller provides a pre-built blob
+ *   for direct fee estimation; useful for offline signing or PQC key types.
  * Scenario 3 (legacy): existing transaction_json path driven by signatureNumber.
  */
 public class EvaluateFeeDemo {
 
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
-    // Sponsor account that funds the demo activations
-    private static final String SPONSOR_ADDRESS     = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
-    private static final String SPONSOR_PRIVATE_KEY = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
-    private static final Long   SPONSOR_NONCE       = 10L;
+    private static final String SPONSOR_ADDRESS     = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
+    private static final String SPONSOR_PRIVATE_KEY = "YOUR_PRIVATE_KEY";
 
     // -----------------------------------------------------------------------
     // Scenario 1: signatureKeys — two-step auto-fee evaluation
     // -----------------------------------------------------------------------
     @Test
     public void scenario1_signatureKeys() {
-        // Generate a new SM2 destination account
         Keypair dest = Keypair.generator(KeyType.SM2);
         System.out.println("New SM2 address: " + dest.getAddress());
+
+        long nonce = getSponsorNonce();
 
         AccountActivateOperation op = new AccountActivateOperation();
         op.setSourceAddress(SPONSOR_ADDRESS);
@@ -49,9 +46,8 @@ public class EvaluateFeeDemo {
 
         TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
         request.setSourceAddress(SPONSOR_ADDRESS);
-        request.setNonce(SPONSOR_NONCE);
+        request.setNonce(nonce + 1);
         request.addOperation(op);
-        // Provide private keys — SDK will sign, estimate, rebuild, and re-sign
         request.setSignatureKeys(new String[]{SPONSOR_PRIVATE_KEY});
 
         TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);
@@ -61,11 +57,9 @@ public class EvaluateFeeDemo {
         }
 
         TransactionEvaluateFeeResult result = response.getResult();
-        System.out.println("feeLimit:  " + result.getTxs()[0].getTransactionEnv().getTransactionFees().getFeeLimit());
-        System.out.println("gasPrice:  " + result.getTxs()[0].getTransactionEnv().getTransactionFees().getGasPrice());
-        System.out.println("blob:      " + result.getTransactionBlob());
+        System.out.println("feeLimit: " + result.getTxs()[0].getTransactionEnv().getTransactionFees().getFeeLimit());
+        System.out.println("gasPrice: " + result.getTxs()[0].getTransactionEnv().getTransactionFees().getGasPrice());
 
-        // Submit directly — no re-signing needed
         TransactionSubmitRequest submitRequest = new TransactionSubmitRequest();
         submitRequest.setTransactionBlob(result.getTransactionBlob());
         submitRequest.setSignatures(result.getSignatures());
@@ -74,22 +68,50 @@ public class EvaluateFeeDemo {
     }
 
     // -----------------------------------------------------------------------
-    // Scenario 2/4: transactionBlob provided — direct passthrough
+    // Scenario 2/4: pre-built blob + signatures — direct passthrough
     // -----------------------------------------------------------------------
     @Test
     public void scenario2_prebuiltBlob() {
-        // Caller already has a blob (e.g. built offline for a Dilithium3 account)
-        String prebuiltBlob = "YOUR_HEX_BLOB_HERE";
-        Signature sig = new Signature();
-        sig.setSignData("YOUR_SIGN_DATA_HEX");
-        sig.setPublicKey("YOUR_PUBLIC_KEY_HEX");
+        long nonce = getSponsorNonce();
 
-        TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
-        request.setTransactionBlob(prebuiltBlob);
-        request.setSignatures(new Signature[]{sig});
+        // Step 1: build a GasSend blob manually
+        GasSendOperation sendOp = new GasSendOperation();
+        sendOp.setSourceAddress(SPONSOR_ADDRESS);
+        sendOp.setDestAddress(SPONSOR_ADDRESS); // send to self for demo
+        sendOp.setAmount(1000L);
 
-        TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);
-        System.out.println("Fee response: " + JSON.toJSONString(response));
+        TransactionBuildBlobRequest blobReq = new TransactionBuildBlobRequest();
+        blobReq.setSourceAddress(SPONSOR_ADDRESS);
+        blobReq.setNonce(nonce + 1);
+        blobReq.setFeeLimit(ToBaseUnit.ToUGas("0.01"));
+        blobReq.setGasPrice(1000L);
+        blobReq.addOperation(sendOp);
+
+        TransactionBuildBlobResponse blobResp = sdk.getTransactionService().buildBlob(blobReq);
+        if (blobResp.getErrorCode() != 0) {
+            System.out.println("Build blob error: " + blobResp.getErrorDesc());
+            return;
+        }
+        String blob = blobResp.getResult().getTransactionBlob();
+
+        // Step 2: sign the blob
+        TransactionSignRequest signReq = new TransactionSignRequest();
+        signReq.setBlob(blob);
+        signReq.addPrivateKey(SPONSOR_PRIVATE_KEY);
+        TransactionSignResponse signResp = sdk.getTransactionService().sign(signReq);
+        if (signResp.getErrorCode() != 0) {
+            System.out.println("Sign error: " + signResp.getErrorDesc());
+            return;
+        }
+        Signature[] signatures = signResp.getResult().getSignatures();
+
+        // Step 3: pass pre-built blob + signatures to evaluateFee
+        TransactionEvaluateFeeRequest feeReq = new TransactionEvaluateFeeRequest();
+        feeReq.setTransactionBlob(blob);
+        feeReq.setSignatures(signatures);
+
+        TransactionEvaluateFeeResponse feeResp = sdk.getTransactionService().evaluateFee(feeReq);
+        System.out.println("Scenario 2 fee response: " + JSON.toJSONString(feeResp));
     }
 
     // -----------------------------------------------------------------------
@@ -97,6 +119,7 @@ public class EvaluateFeeDemo {
     // -----------------------------------------------------------------------
     @Test
     public void scenario3_legacy() {
+        long nonce = getSponsorNonce();
         Keypair dest = Keypair.generator(KeyType.ED25519);
 
         AccountActivateOperation op = new AccountActivateOperation();
@@ -106,11 +129,23 @@ public class EvaluateFeeDemo {
 
         TransactionEvaluateFeeRequest request = new TransactionEvaluateFeeRequest();
         request.setSourceAddress(SPONSOR_ADDRESS);
-        request.setNonce(SPONSOR_NONCE);
+        request.setNonce(nonce + 1);
         request.addOperation(op);
-        request.setSignatureNumber(1);  // drives the legacy estimate
+        request.setSignatureNumber(1);
 
         TransactionEvaluateFeeResponse response = sdk.getTransactionService().evaluateFee(request);
-        System.out.println("Fee response: " + JSON.toJSONString(response));
+        System.out.println("Scenario 3 fee response: " + JSON.toJSONString(response));
+    }
+
+    // -----------------------------------------------------------------------
+    private long getSponsorNonce() {
+        AccountGetNonceRequest req = new AccountGetNonceRequest();
+        req.setAddress(SPONSOR_ADDRESS);
+        AccountGetNonceResponse resp = sdk.getAccountService().getNonce(req);
+        if (resp.getErrorCode() != 0) {
+            System.out.println("getNonce error: " + resp.getErrorDesc());
+            return 0;
+        }
+        return resp.getResult().getNonce() != null ? resp.getResult().getNonce() : 0;
     }
 }

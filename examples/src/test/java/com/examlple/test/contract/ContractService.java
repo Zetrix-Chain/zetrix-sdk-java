@@ -17,7 +17,7 @@ import org.zetrix.model.response.ContractGetInfoResponse;
  * @date
  */
 public class ContractService {
-    private SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    private SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
     @Test
     public void getaddres(){
         String hash = "4c588af9f05e1e8a6d4d7e5786c9f06e782568abc9961f855e5189b99edfeaf9";

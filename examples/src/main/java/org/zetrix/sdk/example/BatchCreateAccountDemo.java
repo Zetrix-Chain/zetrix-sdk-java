@@ -42,9 +42,9 @@ public class BatchCreateAccountDemo {
    @Test
     public void createZTXChainAccount(){
         // 推荐人账户地址
-        String refereeAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String refereeAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // 推荐人账户私钥
-        String refereePrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String refereePrivateKey = "YOUR_PRIVATE_KEY";
 
         // 推荐人账户nonce
         // TODO 需要查询当前推荐人的nonce值

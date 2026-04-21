@@ -19,12 +19,12 @@ import org.zetrix.model.response.result.data.Signature;
  * @date
  */
 public class TransactionService {
-    private SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    private SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
     @Test(dataProvider = "operationProvider",dataProviderClass = OperationProvider.class)
     public void submit(BaseOperation operation, Long nonce){
 
 
-        String address = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String address = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
 
         TransactionBuildBlobRequest buildBlobRequest = new TransactionBuildBlobRequest();
         buildBlobRequest.setSourceAddress(address);
@@ -37,7 +37,7 @@ public class TransactionService {
 
         TransactionSignRequest  signRequest = new TransactionSignRequest();
         signRequest.setBlob(buildBlobResponse.getResult().getTransactionBlob());
-        String[] privateKeys = new String[]{"privBxGeMBaXMfomHDzeJrNb7dc5f7XSc9WaKHNksafaASsgmY5daN4R","privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz"};
+        String[] privateKeys = new String[]{"privBxGeMBaXMfomHDzeJrNb7dc5f7XSc9WaKHNksafaASsgmY5daN4R","YOUR_PRIVATE_KEY"};
         signRequest.setPrivateKeys(privateKeys);
         TransactionSignResponse signResponse = sdk.getTransactionService().sign(signRequest);
 
@@ -68,7 +68,7 @@ public class TransactionService {
     {
         String destAddress = "ZTX3FaM7kHNttENVRxYzMGSX7bLKNRhQnBKFJ";
 
-        String senderAddresss = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddresss = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         Long eaAmount = ToBaseUnit.ToUGas("10.9");
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.ToUGas("0.01");
