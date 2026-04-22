@@ -55,10 +55,7 @@ public class BlobSignVerifyTest {
 
     @BeforeClass
     public static void initSDK() {
-        SDKInitRequest req = new SDKInitRequest();
-        req.setUrl("https://test-node.zetrix.com");
-        SDK.getInstance().init(req);
-        sdk = SDK.getInstance();
+        sdk = SDK.getInstance("url");
     }
 
     // ---- helpers ----
