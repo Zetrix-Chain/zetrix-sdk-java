@@ -159,6 +159,8 @@ public class EvaluateFeeDemo {
         if (resp.getErrorCode() != 0) {
             throw new IllegalStateException("getNonce failed: " + resp.getErrorDesc());
         }
-        return resp.getResult().getNonce() != null ? resp.getResult().getNonce() : 0;
+        Long nonce = resp.getResult().getNonce();
+        if (nonce == null) throw new IllegalStateException("getNonce returned null for " + SPONSOR_ADDRESS);
+        return nonce;
     }
 }

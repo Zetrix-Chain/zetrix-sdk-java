@@ -206,12 +206,12 @@ public class TransactionEvaluateFeeRequest {
         this.signatureKeys = signatureKeys;
     }
 
-    /** Scenario 1 &amp; 3: override the initial gasPrice (defaults to 10L if unset). */
+    /** Scenario 1 only: override the initial gasPrice used in the two-step estimate (defaults to 10L if unset). */
     public Long getGasPrice() {
         return gasPrice;
     }
 
-    /** Scenario 1 &amp; 3: override the initial gasPrice (defaults to 10L if unset). */
+    /** Scenario 1 only: override the initial gasPrice used in the two-step estimate (defaults to 10L if unset). */
     public void setGasPrice(Long gasPrice) {
         this.gasPrice = gasPrice;
     }
