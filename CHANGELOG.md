@@ -18,7 +18,6 @@
 - `gasPrice` default in evaluateFee Scenario 1 changed from `1000L` to `10L` to match live-node requirements
 
 ### Fixed
-- `TransactionServiceImpl.evaluateFee` Scenario 3: `gasPrice` default was `1000L`, causing fee-limit-exceeded errors on the live node; corrected to `10L`
 - Fee estimation error message previously returned the generic string `"Fee estimation failed"` regardless of the actual node response; now appends `[node error <code>: <desc>]` when the node returns a non-zero error code
 
 ---

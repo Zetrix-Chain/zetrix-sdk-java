@@ -24,9 +24,10 @@ import org.zetrix.model.response.result.data.Signature;
  */
 public class PqcTransactionDemo {
 
-    private static final String NODE_URL        = "https://test-node.zetrix.com";
-    private static final String SPONSOR_ADDRESS = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
-    private static final String SPONSOR_KEY     = "YOUR_PRIVATE_KEY";
+    private static final String NODE_URL =
+            System.getenv("ZETRIX_NODE_URL") != null ? System.getenv("ZETRIX_NODE_URL") : "https://test-node.zetrix.com";
+    private static final String SPONSOR_ADDRESS = System.getenv("ZETRIX_SPONSOR_ADDRESS");
+    private static final String SPONSOR_KEY     = System.getenv("ZETRIX_SPONSOR_KEY");
     private static final long   INIT_BALANCE    = 1000000000L; // 1 Gas in uGas
 
     private static final String CONTRACT_PAYLOAD =
@@ -45,8 +46,16 @@ public class PqcTransactionDemo {
     // =========================================================================
     // Backward compatibility — no-arg APIs must still produce ED25519 keys
     // =========================================================================
+    private void requireEnvVars() {
+        if (SPONSOR_ADDRESS == null || SPONSOR_KEY == null) {
+            throw new IllegalStateException(
+                "Set ZETRIX_SPONSOR_ADDRESS and ZETRIX_SPONSOR_KEY environment variables to run live-node demos");
+        }
+    }
+
     @Test
     public void testBackwardCompatibility() {
+        requireEnvVars();
         System.out.println("=== Backward Compatibility ===");
 
         Keypair kp = Keypair.generator();
@@ -124,6 +133,7 @@ public class PqcTransactionDemo {
     // =========================================================================
 
     private void runBasicTransactionTest(KeyType keyType) {
+        requireEnvVars();
         System.out.println("=== Basic Transaction: " + keyType + " ===");
         Keypair kp = Keypair.generator(keyType);
         System.out.println("Address:    " + kp.getAddress());
@@ -133,6 +143,7 @@ public class PqcTransactionDemo {
     }
 
     private void runContractTest(KeyType keyType) {
+        requireEnvVars();
         System.out.println("=== Contract Test: " + keyType + " ===");
         Keypair kp = Keypair.generator(keyType);
         System.out.println("Address: " + kp.getAddress());

@@ -34,6 +34,8 @@ import static org.junit.Assert.*;
 public class BlobSignVerifyTest {
 
     private static final String DEST_ADDRESS = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
+    // No network calls made; SDK is initialised only to access buildBlob/sign which are local operations.
+    private static final String OFFLINE_TEST_URL = "http://offline.invalid";
 
     private static SDK sdk;
 
@@ -55,7 +57,7 @@ public class BlobSignVerifyTest {
 
     @BeforeClass
     public static void initSDK() {
-        sdk = SDK.getInstance("url");
+        sdk = SDK.getInstance(OFFLINE_TEST_URL);
     }
 
     // ---- helpers ----

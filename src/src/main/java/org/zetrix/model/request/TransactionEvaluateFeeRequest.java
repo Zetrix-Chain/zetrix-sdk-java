@@ -176,34 +176,42 @@ public class TransactionEvaluateFeeRequest {
         this.metadata = metadata;
     }
 
+    /** Scenario 2/4: hex-encoded pre-built transaction blob for direct fee estimation. */
     public String getTransactionBlob() {
         return transactionBlob;
     }
 
+    /** Scenario 2/4: hex-encoded pre-built transaction blob for direct fee estimation. */
     public void setTransactionBlob(String transactionBlob) {
         this.transactionBlob = transactionBlob;
     }
 
+    /** Scenario 2/4: optional pre-computed signatures to include alongside transactionBlob. */
     public Signature[] getSignatures() {
         return signatures;
     }
 
+    /** Scenario 2/4: optional pre-computed signatures to include alongside transactionBlob. */
     public void setSignatures(Signature[] signatures) {
         this.signatures = signatures;
     }
 
+    /** Scenario 1: encoded private key strings used for the two-step sign→estimate→re-sign flow. */
     public String[] getSignatureKeys() {
         return signatureKeys;
     }
 
+    /** Scenario 1: encoded private key strings used for the two-step sign→estimate→re-sign flow. */
     public void setSignatureKeys(String[] signatureKeys) {
         this.signatureKeys = signatureKeys;
     }
 
+    /** Scenario 1 &amp; 3: override the initial gasPrice (defaults to 10L if unset). */
     public Long getGasPrice() {
         return gasPrice;
     }
 
+    /** Scenario 1 &amp; 3: override the initial gasPrice (defaults to 10L if unset). */
     public void setGasPrice(Long gasPrice) {
         this.gasPrice = gasPrice;
     }

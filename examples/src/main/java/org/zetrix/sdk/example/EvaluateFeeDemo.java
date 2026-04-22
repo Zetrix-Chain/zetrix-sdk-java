@@ -24,16 +24,19 @@ import org.junit.Test;
  */
 public class EvaluateFeeDemo {
 
-    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
+    private static final String NODE_URL =
+            System.getenv("ZETRIX_NODE_URL") != null ? System.getenv("ZETRIX_NODE_URL") : "https://test-node.zetrix.com";
+    private static final String SPONSOR_ADDRESS     = System.getenv("ZETRIX_SPONSOR_ADDRESS");
+    private static final String SPONSOR_PRIVATE_KEY = System.getenv("ZETRIX_SPONSOR_KEY");
 
-    private static final String SPONSOR_ADDRESS     = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
-    private static final String SPONSOR_PRIVATE_KEY = "YOUR_PRIVATE_KEY";
+    SDK sdk = SDK.getInstance(NODE_URL);
 
     // -----------------------------------------------------------------------
     // Scenario 1: signatureKeys — two-step auto-fee evaluation
     // -----------------------------------------------------------------------
     @Test
     public void scenario1_signatureKeys() {
+        requireEnvVars();
         Keypair dest = Keypair.generator(KeyType.SM2);
         System.out.println("New SM2 address: " + dest.getAddress());
 
@@ -73,12 +76,14 @@ public class EvaluateFeeDemo {
     // -----------------------------------------------------------------------
     @Test
     public void scenario2_prebuiltBlob() {
+        requireEnvVars();
         long nonce = getSponsorNonce();
 
         // Step 1: build a GasSend blob manually
+        Keypair dest = Keypair.generator(KeyType.ED25519);
         GasSendOperation sendOp = new GasSendOperation();
         sendOp.setSourceAddress(SPONSOR_ADDRESS);
-        sendOp.setDestAddress(SPONSOR_ADDRESS); // send to self for demo
+        sendOp.setDestAddress(dest.getAddress());
         sendOp.setAmount(1000L);
 
         TransactionBuildBlobRequest blobReq = new TransactionBuildBlobRequest();
@@ -120,6 +125,7 @@ public class EvaluateFeeDemo {
     // -----------------------------------------------------------------------
     @Test
     public void scenario3_legacy() {
+        requireEnvVars();
         long nonce = getSponsorNonce();
         Keypair dest = Keypair.generator(KeyType.ED25519);
 
@@ -139,13 +145,19 @@ public class EvaluateFeeDemo {
     }
 
     // -----------------------------------------------------------------------
+    private void requireEnvVars() {
+        if (SPONSOR_ADDRESS == null || SPONSOR_PRIVATE_KEY == null) {
+            throw new IllegalStateException(
+                "Set ZETRIX_SPONSOR_ADDRESS and ZETRIX_SPONSOR_KEY environment variables to run live-node demos");
+        }
+    }
+
     private long getSponsorNonce() {
         AccountGetNonceRequest req = new AccountGetNonceRequest();
         req.setAddress(SPONSOR_ADDRESS);
         AccountGetNonceResponse resp = sdk.getAccountService().getNonce(req);
         if (resp.getErrorCode() != 0) {
-            System.out.println("getNonce error: " + resp.getErrorDesc());
-            return 0;
+            throw new IllegalStateException("getNonce failed: " + resp.getErrorDesc());
         }
         return resp.getResult().getNonce() != null ? resp.getResult().getNonce() : 0;
     }
