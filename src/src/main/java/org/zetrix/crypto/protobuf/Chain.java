@@ -12988,6 +12988,911 @@ public final class Chain {
 
   }
 
+  public interface OperationUpgradeContractOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:protocol.OperationUpgradeContract)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>optional string dest_address = 1;</code>
+     */
+    java.lang.String getDestAddress();
+    /**
+     * <code>optional string dest_address = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getDestAddressBytes();
+
+    /**
+     * <code>optional bool s_payload = 2;</code>
+     */
+    boolean getSPayload();
+
+    /**
+     * <code>optional string payload = 3;</code>
+     */
+    java.lang.String getPayload();
+    /**
+     * <code>optional string payload = 3;</code>
+     */
+    com.google.protobuf.ByteString
+        getPayloadBytes();
+
+    /**
+     * <code>optional bool s_owner = 4;</code>
+     */
+    boolean getSOwner();
+
+    /**
+     * <code>optional string owner = 5;</code>
+     */
+    java.lang.String getOwner();
+    /**
+     * <code>optional string owner = 5;</code>
+     */
+    com.google.protobuf.ByteString
+        getOwnerBytes();
+  }
+  /**
+   * Protobuf type {@code protocol.OperationUpgradeContract}
+   */
+  public  static final class OperationUpgradeContract extends
+      com.google.protobuf.GeneratedMessageV3 implements
+      // @@protoc_insertion_point(message_implements:protocol.OperationUpgradeContract)
+      OperationUpgradeContractOrBuilder {
+    // Use OperationUpgradeContract.newBuilder() to construct.
+    private OperationUpgradeContract(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+      super(builder);
+    }
+    private OperationUpgradeContract() {
+      destAddress_ = "";
+      sPayload_ = false;
+      payload_ = "";
+      sOwner_ = false;
+      owner_ = "";
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+    getUnknownFields() {
+      return com.google.protobuf.UnknownFieldSet.getDefaultInstance();
+    }
+    private OperationUpgradeContract(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      this();
+      int mutable_bitField0_ = 0;
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!input.skipField(tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              destAddress_ = s;
+              break;
+            }
+            case 16: {
+
+              sPayload_ = input.readBool();
+              break;
+            }
+            case 26: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              payload_ = s;
+              break;
+            }
+            case 32: {
+
+              sOwner_ = input.readBool();
+              break;
+            }
+            case 42: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              owner_ = s;
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e).setUnfinishedMessage(this);
+      } finally {
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return org.zetrix.crypto.protobuf.Chain.internal_static_protocol_OperationUpgradeContract_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return org.zetrix.crypto.protobuf.Chain.internal_static_protocol_OperationUpgradeContract_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.class, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder.class);
+    }
+
+    public static final int DEST_ADDRESS_FIELD_NUMBER = 1;
+    private volatile java.lang.Object destAddress_;
+    /**
+     * <code>optional string dest_address = 1;</code>
+     */
+    public java.lang.String getDestAddress() {
+      java.lang.Object ref = destAddress_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        destAddress_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string dest_address = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getDestAddressBytes() {
+      java.lang.Object ref = destAddress_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        destAddress_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int S_PAYLOAD_FIELD_NUMBER = 2;
+    private boolean sPayload_;
+    /**
+     * <code>optional bool s_payload = 2;</code>
+     */
+    public boolean getSPayload() {
+      return sPayload_;
+    }
+
+    public static final int PAYLOAD_FIELD_NUMBER = 3;
+    private volatile java.lang.Object payload_;
+    /**
+     * <code>optional string payload = 3;</code>
+     */
+    public java.lang.String getPayload() {
+      java.lang.Object ref = payload_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        payload_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string payload = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getPayloadBytes() {
+      java.lang.Object ref = payload_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        payload_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int S_OWNER_FIELD_NUMBER = 4;
+    private boolean sOwner_;
+    /**
+     * <code>optional bool s_owner = 4;</code>
+     */
+    public boolean getSOwner() {
+      return sOwner_;
+    }
+
+    public static final int OWNER_FIELD_NUMBER = 5;
+    private volatile java.lang.Object owner_;
+    /**
+     * <code>optional string owner = 5;</code>
+     */
+    public java.lang.String getOwner() {
+      java.lang.Object ref = owner_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        owner_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string owner = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOwnerBytes() {
+      java.lang.Object ref = owner_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        owner_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (!getDestAddressBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 1, destAddress_);
+      }
+      if (sPayload_ != false) {
+        output.writeBool(2, sPayload_);
+      }
+      if (!getPayloadBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, payload_);
+      }
+      if (sOwner_ != false) {
+        output.writeBool(4, sOwner_);
+      }
+      if (!getOwnerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, owner_);
+      }
+    }
+
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (!getDestAddressBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, destAddress_);
+      }
+      if (sPayload_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(2, sPayload_);
+      }
+      if (!getPayloadBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, payload_);
+      }
+      if (sOwner_ != false) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBoolSize(4, sOwner_);
+      }
+      if (!getOwnerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, owner_);
+      }
+      memoizedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract)) {
+        return super.equals(obj);
+      }
+      org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract other = (org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract) obj;
+
+      boolean result = true;
+      result = result && getDestAddress()
+          .equals(other.getDestAddress());
+      result = result && (getSPayload()
+          == other.getSPayload());
+      result = result && getPayload()
+          .equals(other.getPayload());
+      result = result && (getSOwner()
+          == other.getSOwner());
+      result = result && getOwner()
+          .equals(other.getOwner());
+      return result;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptorForType().hashCode();
+      hash = (37 * hash) + DEST_ADDRESS_FIELD_NUMBER;
+      hash = (53 * hash) + getDestAddress().hashCode();
+      hash = (37 * hash) + S_PAYLOAD_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSPayload());
+      hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
+      hash = (53 * hash) + getPayload().hashCode();
+      hash = (37 * hash) + S_OWNER_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+          getSOwner());
+      hash = (37 * hash) + OWNER_FIELD_NUMBER;
+      hash = (53 * hash) + getOwner().hashCode();
+      hash = (29 * hash) + unknownFields.hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input);
+    }
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessageV3
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code protocol.OperationUpgradeContract}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:protocol.OperationUpgradeContract)
+        org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return org.zetrix.crypto.protobuf.Chain.internal_static_protocol_OperationUpgradeContract_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return org.zetrix.crypto.protobuf.Chain.internal_static_protocol_OperationUpgradeContract_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.class, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder.class);
+      }
+
+      // Construct using org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+        }
+      }
+      public Builder clear() {
+        super.clear();
+        destAddress_ = "";
+
+        sPayload_ = false;
+
+        payload_ = "";
+
+        sOwner_ = false;
+
+        owner_ = "";
+
+        return this;
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return org.zetrix.crypto.protobuf.Chain.internal_static_protocol_OperationUpgradeContract_descriptor;
+      }
+
+      public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract getDefaultInstanceForType() {
+        return org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.getDefaultInstance();
+      }
+
+      public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract build() {
+        org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract buildPartial() {
+        org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract result = new org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract(this);
+        result.destAddress_ = destAddress_;
+        result.sPayload_ = sPayload_;
+        result.payload_ = payload_;
+        result.sOwner_ = sOwner_;
+        result.owner_ = owner_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder clone() {
+        return (Builder) super.clone();
+      }
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.setField(field, value);
+      }
+      public Builder clearField(
+          com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return (Builder) super.clearField(field);
+      }
+      public Builder clearOneof(
+          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return (Builder) super.clearOneof(oneof);
+      }
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index, Object value) {
+        return (Builder) super.setRepeatedField(field, index, value);
+      }
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          Object value) {
+        return (Builder) super.addRepeatedField(field, value);
+      }
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract) {
+          return mergeFrom((org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract other) {
+        if (other == org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.getDefaultInstance()) return this;
+        if (!other.getDestAddress().isEmpty()) {
+          destAddress_ = other.destAddress_;
+          onChanged();
+        }
+        if (other.getSPayload() != false) {
+          setSPayload(other.getSPayload());
+        }
+        if (!other.getPayload().isEmpty()) {
+          payload_ = other.payload_;
+          onChanged();
+        }
+        if (other.getSOwner() != false) {
+          setSOwner(other.getSOwner());
+        }
+        if (!other.getOwner().isEmpty()) {
+          owner_ = other.owner_;
+          onChanged();
+        }
+        onChanged();
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract) e.getUnfinishedMessage();
+          throw e.unwrapIOException();
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+
+      private java.lang.Object destAddress_ = "";
+      /**
+       * <code>optional string dest_address = 1;</code>
+       */
+      public java.lang.String getDestAddress() {
+        java.lang.Object ref = destAddress_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          destAddress_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string dest_address = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getDestAddressBytes() {
+        java.lang.Object ref = destAddress_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          destAddress_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string dest_address = 1;</code>
+       */
+      public Builder setDestAddress(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        destAddress_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string dest_address = 1;</code>
+       */
+      public Builder clearDestAddress() {
+        
+        destAddress_ = getDefaultInstance().getDestAddress();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string dest_address = 1;</code>
+       */
+      public Builder setDestAddressBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        destAddress_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean sPayload_ ;
+      /**
+       * <code>optional bool s_payload = 2;</code>
+       */
+      public boolean getSPayload() {
+        return sPayload_;
+      }
+      /**
+       * <code>optional bool s_payload = 2;</code>
+       */
+      public Builder setSPayload(boolean value) {
+        
+        sPayload_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool s_payload = 2;</code>
+       */
+      public Builder clearSPayload() {
+        
+        sPayload_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object payload_ = "";
+      /**
+       * <code>optional string payload = 3;</code>
+       */
+      public java.lang.String getPayload() {
+        java.lang.Object ref = payload_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          payload_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string payload = 3;</code>
+       */
+      public com.google.protobuf.ByteString
+          getPayloadBytes() {
+        java.lang.Object ref = payload_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          payload_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string payload = 3;</code>
+       */
+      public Builder setPayload(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        payload_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string payload = 3;</code>
+       */
+      public Builder clearPayload() {
+        
+        payload_ = getDefaultInstance().getPayload();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string payload = 3;</code>
+       */
+      public Builder setPayloadBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        payload_ = value;
+        onChanged();
+        return this;
+      }
+
+      private boolean sOwner_ ;
+      /**
+       * <code>optional bool s_owner = 4;</code>
+       */
+      public boolean getSOwner() {
+        return sOwner_;
+      }
+      /**
+       * <code>optional bool s_owner = 4;</code>
+       */
+      public Builder setSOwner(boolean value) {
+        
+        sOwner_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional bool s_owner = 4;</code>
+       */
+      public Builder clearSOwner() {
+        
+        sOwner_ = false;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object owner_ = "";
+      /**
+       * <code>optional string owner = 5;</code>
+       */
+      public java.lang.String getOwner() {
+        java.lang.Object ref = owner_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          owner_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string owner = 5;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOwnerBytes() {
+        java.lang.Object ref = owner_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          owner_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string owner = 5;</code>
+       */
+      public Builder setOwner(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        owner_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string owner = 5;</code>
+       */
+      public Builder clearOwner() {
+        
+        owner_ = getDefaultInstance().getOwner();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string owner = 5;</code>
+       */
+      public Builder setOwnerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        owner_ = value;
+        onChanged();
+        return this;
+      }
+      public final Builder setUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+      public final Builder mergeUnknownFields(
+          final com.google.protobuf.UnknownFieldSet unknownFields) {
+        return this;
+      }
+
+
+      // @@protoc_insertion_point(builder_scope:protocol.OperationUpgradeContract)
+    }
+
+    // @@protoc_insertion_point(class_scope:protocol.OperationUpgradeContract)
+    private static final org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract();
+    }
+
+    public static org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<OperationUpgradeContract>
+        PARSER = new com.google.protobuf.AbstractParser<OperationUpgradeContract>() {
+      public OperationUpgradeContract parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+          return new OperationUpgradeContract(input, extensionRegistry);
+      }
+    };
+
+    public static com.google.protobuf.Parser<OperationUpgradeContract> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<OperationUpgradeContract> getParserForType() {
+      return PARSER;
+    }
+
+    public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
+  }
+
   public interface OperationOrBuilder extends
       // @@protoc_insertion_point(interface_extends:protocol.Operation)
       com.google.protobuf.MessageOrBuilder {
@@ -13151,6 +14056,19 @@ public final class Chain {
      * <code>optional .protocol.OperationSetPrivilege set_privilege = 14;</code>
      */
     org.zetrix.crypto.protobuf.Chain.OperationSetPrivilegeOrBuilder getSetPrivilegeOrBuilder();
+
+    /**
+     * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+     */
+    boolean hasUpgradeContract();
+    /**
+     * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+     */
+    org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract getUpgradeContract();
+    /**
+     * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+     */
+    org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder getUpgradeContractOrBuilder();
   }
   /**
    * Protobuf type {@code protocol.Operation}
@@ -13335,6 +14253,19 @@ public final class Chain {
 
               break;
             }
+            case 122: {
+              org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder subBuilder = null;
+              if (upgradeContract_ != null) {
+                subBuilder = upgradeContract_.toBuilder();
+              }
+              upgradeContract_ = input.readMessage(org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.parser(), extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(upgradeContract_);
+                upgradeContract_ = subBuilder.buildPartial();
+              }
+
+              break;
+            }
           }
         }
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
@@ -13403,6 +14334,10 @@ public final class Chain {
        * <code>SET_PRIVILEGE = 9;</code>
        */
       SET_PRIVILEGE(9),
+      /**
+       * <code>UPGRADE_CONTRACT = 10;</code>
+       */
+      UPGRADE_CONTRACT(10),
       UNRECOGNIZED(-1),
       ;
 
@@ -13446,6 +14381,10 @@ public final class Chain {
        * <code>SET_PRIVILEGE = 9;</code>
        */
       public static final int SET_PRIVILEGE_VALUE = 9;
+      /**
+       * <code>UPGRADE_CONTRACT = 10;</code>
+       */
+      public static final int UPGRADE_CONTRACT_VALUE = 10;
 
 
       public final int getNumber() {
@@ -13476,6 +14415,7 @@ public final class Chain {
           case 7: return PAY_COIN;
           case 8: return LOG;
           case 9: return SET_PRIVILEGE;
+          case 10: return UPGRADE_CONTRACT;
           default: return null;
         }
       }
@@ -13819,6 +14759,27 @@ public final class Chain {
       return getSetPrivilege();
     }
 
+    public static final int UPGRADE_CONTRACT_FIELD_NUMBER = 15;
+    private org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract upgradeContract_;
+    /**
+     * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+     */
+    public boolean hasUpgradeContract() {
+      return upgradeContract_ != null;
+    }
+    /**
+     * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+     */
+    public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract getUpgradeContract() {
+      return upgradeContract_ == null ? org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.getDefaultInstance() : upgradeContract_;
+    }
+    /**
+     * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+     */
+    public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder getUpgradeContractOrBuilder() {
+      return getUpgradeContract();
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -13869,6 +14830,9 @@ public final class Chain {
       }
       if (setPrivilege_ != null) {
         output.writeMessage(14, getSetPrivilege());
+      }
+      if (upgradeContract_ != null) {
+        output.writeMessage(15, getUpgradeContract());
       }
     }
 
@@ -13926,6 +14890,10 @@ public final class Chain {
       if (setPrivilege_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(14, getSetPrivilege());
+      }
+      if (upgradeContract_ != null) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(15, getUpgradeContract());
       }
       memoizedSize = size;
       return size;
@@ -13995,6 +14963,11 @@ public final class Chain {
         result = result && getSetPrivilege()
             .equals(other.getSetPrivilege());
       }
+      result = result && (hasUpgradeContract() == other.hasUpgradeContract());
+      if (hasUpgradeContract()) {
+        result = result && getUpgradeContract()
+            .equals(other.getUpgradeContract());
+      }
       return result;
     }
 
@@ -14048,6 +15021,10 @@ public final class Chain {
       if (hasSetPrivilege()) {
         hash = (37 * hash) + SET_PRIVILEGE_FIELD_NUMBER;
         hash = (53 * hash) + getSetPrivilege().hashCode();
+      }
+      if (hasUpgradeContract()) {
+        hash = (37 * hash) + UPGRADE_CONTRACT_FIELD_NUMBER;
+        hash = (53 * hash) + getUpgradeContract().hashCode();
       }
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
@@ -14229,6 +15206,12 @@ public final class Chain {
           setPrivilege_ = null;
           setPrivilegeBuilder_ = null;
         }
+        if (upgradeContractBuilder_ == null) {
+          upgradeContract_ = null;
+        } else {
+          upgradeContract_ = null;
+          upgradeContractBuilder_ = null;
+        }
         return this;
       }
 
@@ -14299,6 +15282,11 @@ public final class Chain {
           result.setPrivilege_ = setPrivilege_;
         } else {
           result.setPrivilege_ = setPrivilegeBuilder_.build();
+        }
+        if (upgradeContractBuilder_ == null) {
+          result.upgradeContract_ = upgradeContract_;
+        } else {
+          result.upgradeContract_ = upgradeContractBuilder_.build();
         }
         onBuilt();
         return result;
@@ -14381,6 +15369,9 @@ public final class Chain {
         }
         if (other.hasSetPrivilege()) {
           mergeSetPrivilege(other.getSetPrivilege());
+        }
+        if (other.hasUpgradeContract()) {
+          mergeUpgradeContract(other.getUpgradeContract());
         }
         onChanged();
         return this;
@@ -15697,6 +16688,123 @@ public final class Chain {
           setPrivilege_ = null;
         }
         return setPrivilegeBuilder_;
+      }
+
+      private org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract upgradeContract_ = null;
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder> upgradeContractBuilder_;
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public boolean hasUpgradeContract() {
+        return upgradeContractBuilder_ != null || upgradeContract_ != null;
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract getUpgradeContract() {
+        if (upgradeContractBuilder_ == null) {
+          return upgradeContract_ == null ? org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.getDefaultInstance() : upgradeContract_;
+        } else {
+          return upgradeContractBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public Builder setUpgradeContract(org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract value) {
+        if (upgradeContractBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          upgradeContract_ = value;
+          onChanged();
+        } else {
+          upgradeContractBuilder_.setMessage(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public Builder setUpgradeContract(
+          org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder builderForValue) {
+        if (upgradeContractBuilder_ == null) {
+          upgradeContract_ = builderForValue.build();
+          onChanged();
+        } else {
+          upgradeContractBuilder_.setMessage(builderForValue.build());
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public Builder mergeUpgradeContract(org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract value) {
+        if (upgradeContractBuilder_ == null) {
+          if (upgradeContract_ != null) {
+            upgradeContract_ =
+              org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.newBuilder(upgradeContract_).mergeFrom(value).buildPartial();
+          } else {
+            upgradeContract_ = value;
+          }
+          onChanged();
+        } else {
+          upgradeContractBuilder_.mergeFrom(value);
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public Builder clearUpgradeContract() {
+        if (upgradeContractBuilder_ == null) {
+          upgradeContract_ = null;
+          onChanged();
+        } else {
+          upgradeContract_ = null;
+          upgradeContractBuilder_ = null;
+        }
+
+        return this;
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder getUpgradeContractBuilder() {
+        
+        onChanged();
+        return getUpgradeContractFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      public org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder getUpgradeContractOrBuilder() {
+        if (upgradeContractBuilder_ != null) {
+          return upgradeContractBuilder_.getMessageOrBuilder();
+        } else {
+          return upgradeContract_ == null ?
+              org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.getDefaultInstance() : upgradeContract_;
+        }
+      }
+      /**
+       * <code>optional .protocol.OperationUpgradeContract upgrade_contract = 15;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilderV3<
+          org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder> 
+          getUpgradeContractFieldBuilder() {
+        if (upgradeContractBuilder_ == null) {
+          upgradeContractBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+              org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContract.Builder, org.zetrix.crypto.protobuf.Chain.OperationUpgradeContractOrBuilder>(
+                  getUpgradeContract(),
+                  getParentForChildren(),
+                  isClean());
+          upgradeContract_ = null;
+        }
+        return upgradeContractBuilder_;
       }
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
@@ -25315,6 +26423,21 @@ public final class Chain {
      */
     com.google.protobuf.ByteString
         getPayloadBytes();
+
+    /**
+     * <code>optional int64 version = 3;</code>
+     */
+    long getVersion();
+
+    /**
+     * <code>optional string owner = 4;</code>
+     */
+    java.lang.String getOwner();
+    /**
+     * <code>optional string owner = 4;</code>
+     */
+    com.google.protobuf.ByteString
+        getOwnerBytes();
   }
   /**
    * Protobuf type {@code protocol.Contract}
@@ -25330,6 +26453,8 @@ public final class Chain {
     private Contract() {
       type_ = 0;
       payload_ = "";
+      version_ = 0L;
+      owner_ = "";
     }
 
     @java.lang.Override
@@ -25367,6 +26492,17 @@ public final class Chain {
               java.lang.String s = input.readStringRequireUtf8();
 
               payload_ = s;
+              break;
+            }
+            case 24: {
+
+              version_ = input.readInt64();
+              break;
+            }
+            case 34: {
+              java.lang.String s = input.readStringRequireUtf8();
+
+              owner_ = s;
               break;
             }
           }
@@ -25531,6 +26667,49 @@ public final class Chain {
       }
     }
 
+    public static final int VERSION_FIELD_NUMBER = 3;
+    private long version_;
+    /**
+     * <code>optional int64 version = 3;</code>
+     */
+    public long getVersion() {
+      return version_;
+    }
+
+    public static final int OWNER_FIELD_NUMBER = 4;
+    private volatile java.lang.Object owner_;
+    /**
+     * <code>optional string owner = 4;</code>
+     */
+    public java.lang.String getOwner() {
+      java.lang.Object ref = owner_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        owner_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>optional string owner = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getOwnerBytes() {
+      java.lang.Object ref = owner_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        owner_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
@@ -25549,6 +26728,12 @@ public final class Chain {
       if (!getPayloadBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 2, payload_);
       }
+      if (version_ != 0L) {
+        output.writeInt64(3, version_);
+      }
+      if (!getOwnerBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, owner_);
+      }
     }
 
     public int getSerializedSize() {
@@ -25562,6 +26747,13 @@ public final class Chain {
       }
       if (!getPayloadBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, payload_);
+      }
+      if (version_ != 0L) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt64Size(3, version_);
+      }
+      if (!getOwnerBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, owner_);
       }
       memoizedSize = size;
       return size;
@@ -25582,6 +26774,10 @@ public final class Chain {
       result = result && type_ == other.type_;
       result = result && getPayload()
           .equals(other.getPayload());
+      result = result && (getVersion()
+          == other.getVersion());
+      result = result && getOwner()
+          .equals(other.getOwner());
       return result;
     }
 
@@ -25596,6 +26792,11 @@ public final class Chain {
       hash = (53 * hash) + type_;
       hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
       hash = (53 * hash) + getPayload().hashCode();
+      hash = (37 * hash) + VERSION_FIELD_NUMBER;
+      hash = (53 * hash) + com.google.protobuf.Internal.hashLong(
+          getVersion());
+      hash = (37 * hash) + OWNER_FIELD_NUMBER;
+      hash = (53 * hash) + getOwner().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -25718,6 +26919,10 @@ public final class Chain {
 
         payload_ = "";
 
+        version_ = 0L;
+
+        owner_ = "";
+
         return this;
       }
 
@@ -25742,6 +26947,8 @@ public final class Chain {
         org.zetrix.crypto.protobuf.Chain.Contract result = new org.zetrix.crypto.protobuf.Chain.Contract(this);
         result.type_ = type_;
         result.payload_ = payload_;
+        result.version_ = version_;
+        result.owner_ = owner_;
         onBuilt();
         return result;
       }
@@ -25788,6 +26995,13 @@ public final class Chain {
         }
         if (!other.getPayload().isEmpty()) {
           payload_ = other.payload_;
+          onChanged();
+        }
+        if (other.getVersion() != 0L) {
+          setVersion(other.getVersion());
+        }
+        if (!other.getOwner().isEmpty()) {
+          owner_ = other.owner_;
           onChanged();
         }
         onChanged();
@@ -25925,6 +27139,101 @@ public final class Chain {
   checkByteStringIsUtf8(value);
         
         payload_ = value;
+        onChanged();
+        return this;
+      }
+
+      private long version_ ;
+      /**
+       * <code>optional int64 version = 3;</code>
+       */
+      public long getVersion() {
+        return version_;
+      }
+      /**
+       * <code>optional int64 version = 3;</code>
+       */
+      public Builder setVersion(long value) {
+        
+        version_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional int64 version = 3;</code>
+       */
+      public Builder clearVersion() {
+        
+        version_ = 0L;
+        onChanged();
+        return this;
+      }
+
+      private java.lang.Object owner_ = "";
+      /**
+       * <code>optional string owner = 4;</code>
+       */
+      public java.lang.String getOwner() {
+        java.lang.Object ref = owner_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          owner_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>optional string owner = 4;</code>
+       */
+      public com.google.protobuf.ByteString
+          getOwnerBytes() {
+        java.lang.Object ref = owner_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          owner_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>optional string owner = 4;</code>
+       */
+      public Builder setOwner(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  
+        owner_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string owner = 4;</code>
+       */
+      public Builder clearOwner() {
+        
+        owner_ = getDefaultInstance().getOwner();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>optional string owner = 4;</code>
+       */
+      public Builder setOwnerBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+        
+        owner_ = value;
         onChanged();
         return this;
       }
@@ -28305,6 +29614,11 @@ public final class Chain {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_protocol_OperationSetPrivilege_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_protocol_OperationUpgradeContract_descriptor;
+  private static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_protocol_OperationUpgradeContract_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_protocol_Operation_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -28422,75 +29736,81 @@ public final class Chain {
       "vilege\022\025\n\rmaster_weight\030\001 \001(\t\022!\n\007signers" +
       "\030\002 \003(\0132\020.protocol.Signer\022\024\n\014tx_threshold" +
       "\030\003 \001(\t\0229\n\017type_thresholds\030\004 \003(\0132 .protoc" +
-      "ol.OperationTypeThreshold\"\373\005\n\tOperation\022",
-      "&\n\004type\030\001 \001(\0162\030.protocol.Operation.Type\022" +
-      "\026\n\016source_address\030\002 \001(\t\022\020\n\010metadata\030\003 \001(" +
-      "\014\022\026\n\016expr_condition\030\004 \001(\t\0228\n\016create_acco" +
-      "unt\030\005 \001(\0132 .protocol.OperationCreateAcco" +
-      "unt\0222\n\013issue_asset\030\006 \001(\0132\035.protocol.Oper" +
-      "ationIssueAsset\022.\n\tpay_asset\030\007 \001(\0132\033.pro" +
-      "tocol.OperationPayAsset\0224\n\014set_metadata\030" +
-      "\t \001(\0132\036.protocol.OperationSetMetadata\022=\n" +
-      "\021set_signer_weight\030\n \001(\0132\".protocol.Oper" +
-      "ationSetSignerWeight\0226\n\rset_threshold\030\013 ",
-      "\001(\0132\037.protocol.OperationSetThreshold\022,\n\010" +
-      "pay_coin\030\014 \001(\0132\032.protocol.OperationPayCo" +
-      "in\022#\n\003log\030\r \001(\0132\026.protocol.OperationLog\022" +
-      "6\n\rset_privilege\030\016 \001(\0132\037.protocol.Operat" +
-      "ionSetPrivilege\"\255\001\n\004Type\022\013\n\007UNKNOWN\020\000\022\022\n" +
-      "\016CREATE_ACCOUNT\020\001\022\017\n\013ISSUE_ASSET\020\002\022\r\n\tPA" +
-      "Y_ASSET\020\003\022\020\n\014SET_METADATA\020\004\022\025\n\021SET_SIGNE" +
-      "R_WEIGHT\020\005\022\021\n\rSET_THRESHOLD\020\006\022\014\n\010PAY_COI" +
-      "N\020\007\022\007\n\003LOG\020\010\022\021\n\rSET_PRIVILEGE\020\t\"h\n\025Opera" +
-      "tionSetThreshold\022\024\n\014tx_threshold\030\001 \001(\003\0229",
-      "\n\017type_thresholds\030\004 \003(\0132 .protocol.Opera" +
-      "tionTypeThreshold\"\377\001\n\013Transaction\022\026\n\016sou" +
-      "rce_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\026\n\016expr" +
-      "_condition\030\003 \001(\t\022\'\n\noperations\030\004 \003(\0132\023.p" +
-      "rotocol.Operation\022\020\n\010metadata\030\005 \001(\014\022\021\n\tf" +
-      "ee_limit\030\006 \001(\003\022\021\n\tgas_price\030\007 \001(\003\022\027\n\017cei" +
-      "l_ledger_seq\030\010 \001(\003\022\020\n\010chain_id\030\t \001(\003\"%\n\005" +
-      "Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n\006S" +
-      "igner\022\017\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003\"$" +
-      "\n\005Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211\002\n",
-      "\007Trigger\022;\n\020transaction_type\030\001 \001(\0162!.pro" +
-      "tocol.Trigger.TransactionType\022\022\n\nledger_" +
-      "seq\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132\".protoco" +
-      "l.Trigger.OperationTrigger\032/\n\020OperationT" +
-      "rigger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n\017T" +
-      "ransactionType\022\026\n\022NORMAL_TRANSACTION\020\000\022\030" +
-      "\n\024CONTRACT_TRANSACTION\020\001\"\211\001\n\016Transaction" +
-      "Env\022*\n\013transaction\030\001 \001(\0132\025.protocol.Tran" +
-      "saction\022\'\n\nsignatures\030\002 \003(\0132\023.protocol.S" +
-      "ignature\022\"\n\007trigger\030\003 \001(\0132\021.protocol.Tri",
-      "gger\"\326\001\n\023TransactionEnvStore\0221\n\017transact" +
-      "ion_env\030\001 \001(\0132\030.protocol.TransactionEnv\022" +
-      "\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(\t\022" +
-      "\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(\003\022" +
-      "\014\n\004hash\030\006 \001(\014\022\022\n\nactual_fee\030\007 \001(\003\022\032\n\022con" +
-      "tract_tx_hashes\030\010 \003(\014\":\n\021TransactionEnvS" +
-      "et\022%\n\003txs\030\002 \003(\0132\030.protocol.TransactionEn" +
-      "v\"G\n\030ConsensusValueValidation\022\025\n\rexpire_" +
-      "tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n\016C" +
-      "onsensusValue\022*\n\005txset\030\001 \001(\0132\033.protocol.",
-      "TransactionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022\026\n" +
-      "\016previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 \001(" +
-      "\003\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016ledge" +
-      "r_upgrade\030\006 \001(\0132\027.protocol.LedgerUpgrade" +
-      "\0226\n\nvalidation\030\007 \001(\0132\".protocol.Consensu" +
-      "sValueValidation\"j\n\010Contract\022-\n\004type\030\001 \001" +
-      "(\0162\037.protocol.Contract.ContractType\022\017\n\007p" +
-      "ayload\030\002 \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCRI" +
-      "PT\020\000\"\316\001\n\026OperationCreateAccount\022\024\n\014dest_" +
-      "address\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.protoc",
-      "ol.Contract\022(\n\004priv\030\003 \001(\0132\032.protocol.Acc" +
-      "ountPrivilege\022$\n\tmetadatas\030\004 \003(\0132\021.proto" +
-      "col.KeyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n\nini" +
-      "t_input\030\006 \001(\t\"X\n\024OperationSetMetadata\022\013\n" +
-      "\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 \001" +
-      "(\003\022\023\n\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKN" +
-      "OWN\020\000\022\r\n\tSIGNATURE\020dB\034\n\032org.zetrix.crypt" +
-      "o.protobufb\006proto3"
+      "ol.OperationTypeThreshold\"t\n\030OperationUp",
+      "gradeContract\022\024\n\014dest_address\030\001 \001(\t\022\021\n\ts" +
+      "_payload\030\002 \001(\010\022\017\n\007payload\030\003 \001(\t\022\017\n\007s_own" +
+      "er\030\004 \001(\010\022\r\n\005owner\030\005 \001(\t\"\317\006\n\tOperation\022&\n" +
+      "\004type\030\001 \001(\0162\030.protocol.Operation.Type\022\026\n" +
+      "\016source_address\030\002 \001(\t\022\020\n\010metadata\030\003 \001(\014\022" +
+      "\026\n\016expr_condition\030\004 \001(\t\0228\n\016create_accoun" +
+      "t\030\005 \001(\0132 .protocol.OperationCreateAccoun" +
+      "t\0222\n\013issue_asset\030\006 \001(\0132\035.protocol.Operat" +
+      "ionIssueAsset\022.\n\tpay_asset\030\007 \001(\0132\033.proto" +
+      "col.OperationPayAsset\0224\n\014set_metadata\030\t ",
+      "\001(\0132\036.protocol.OperationSetMetadata\022=\n\021s" +
+      "et_signer_weight\030\n \001(\0132\".protocol.Operat" +
+      "ionSetSignerWeight\0226\n\rset_threshold\030\013 \001(" +
+      "\0132\037.protocol.OperationSetThreshold\022,\n\010pa" +
+      "y_coin\030\014 \001(\0132\032.protocol.OperationPayCoin" +
+      "\022#\n\003log\030\r \001(\0132\026.protocol.OperationLog\0226\n" +
+      "\rset_privilege\030\016 \001(\0132\037.protocol.Operatio" +
+      "nSetPrivilege\022<\n\020upgrade_contract\030\017 \001(\0132" +
+      "\".protocol.OperationUpgradeContract\"\303\001\n\004" +
+      "Type\022\013\n\007UNKNOWN\020\000\022\022\n\016CREATE_ACCOUNT\020\001\022\017\n",
+      "\013ISSUE_ASSET\020\002\022\r\n\tPAY_ASSET\020\003\022\020\n\014SET_MET" +
+      "ADATA\020\004\022\025\n\021SET_SIGNER_WEIGHT\020\005\022\021\n\rSET_TH" +
+      "RESHOLD\020\006\022\014\n\010PAY_COIN\020\007\022\007\n\003LOG\020\010\022\021\n\rSET_" +
+      "PRIVILEGE\020\t\022\024\n\020UPGRADE_CONTRACT\020\n\"h\n\025Ope" +
+      "rationSetThreshold\022\024\n\014tx_threshold\030\001 \001(\003" +
+      "\0229\n\017type_thresholds\030\004 \003(\0132 .protocol.Ope" +
+      "rationTypeThreshold\"\377\001\n\013Transaction\022\026\n\016s" +
+      "ource_address\030\001 \001(\t\022\r\n\005nonce\030\002 \001(\003\022\026\n\016ex" +
+      "pr_condition\030\003 \001(\t\022\'\n\noperations\030\004 \003(\0132\023" +
+      ".protocol.Operation\022\020\n\010metadata\030\005 \001(\014\022\021\n",
+      "\tfee_limit\030\006 \001(\003\022\021\n\tgas_price\030\007 \001(\003\022\027\n\017c" +
+      "eil_ledger_seq\030\010 \001(\003\022\020\n\010chain_id\030\t \001(\003\"%" +
+      "\n\005Limit\022\013\n\007UNKNOWN\020\000\022\017\n\nOPERATIONS\020\350\007\"O\n" +
+      "\006Signer\022\017\n\007address\030\001 \001(\t\022\016\n\006weight\030\002 \001(\003" +
+      "\"$\n\005Limit\022\017\n\013SIGNER_NONE\020\000\022\n\n\006SIGNER\020d\"\211" +
+      "\002\n\007Trigger\022;\n\020transaction_type\030\001 \001(\0162!.p" +
+      "rotocol.Trigger.TransactionType\022\022\n\nledge" +
+      "r_seq\030\002 \001(\003\0227\n\013transaction\030\003 \001(\0132\".proto" +
+      "col.Trigger.OperationTrigger\032/\n\020Operatio" +
+      "nTrigger\022\014\n\004hash\030\001 \001(\014\022\r\n\005index\030\002 \001(\003\"C\n",
+      "\017TransactionType\022\026\n\022NORMAL_TRANSACTION\020\000" +
+      "\022\030\n\024CONTRACT_TRANSACTION\020\001\"\211\001\n\016Transacti" +
+      "onEnv\022*\n\013transaction\030\001 \001(\0132\025.protocol.Tr" +
+      "ansaction\022\'\n\nsignatures\030\002 \003(\0132\023.protocol" +
+      ".Signature\022\"\n\007trigger\030\003 \001(\0132\021.protocol.T" +
+      "rigger\"\326\001\n\023TransactionEnvStore\0221\n\017transa" +
+      "ction_env\030\001 \001(\0132\030.protocol.TransactionEn" +
+      "v\022\022\n\nerror_code\030\002 \001(\005\022\022\n\nerror_desc\030\003 \001(" +
+      "\t\022\022\n\nledger_seq\030\004 \001(\003\022\022\n\nclose_time\030\005 \001(" +
+      "\003\022\014\n\004hash\030\006 \001(\014\022\022\n\nactual_fee\030\007 \001(\003\022\032\n\022c",
+      "ontract_tx_hashes\030\010 \003(\014\":\n\021TransactionEn" +
+      "vSet\022%\n\003txs\030\002 \003(\0132\030.protocol.Transaction" +
+      "Env\"G\n\030ConsensusValueValidation\022\025\n\rexpir" +
+      "e_tx_ids\030\001 \003(\005\022\024\n\014error_tx_ids\030\002 \003(\005\"\203\002\n" +
+      "\016ConsensusValue\022*\n\005txset\030\001 \001(\0132\033.protoco" +
+      "l.TransactionEnvSet\022\022\n\nclose_time\030\002 \001(\003\022" +
+      "\026\n\016previous_proof\030\003 \001(\014\022\022\n\nledger_seq\030\004 " +
+      "\001(\003\022\034\n\024previous_ledger_hash\030\005 \001(\014\022/\n\016led" +
+      "ger_upgrade\030\006 \001(\0132\027.protocol.LedgerUpgra" +
+      "de\0226\n\nvalidation\030\007 \001(\0132\".protocol.Consen",
+      "susValueValidation\"\212\001\n\010Contract\022-\n\004type\030" +
+      "\001 \001(\0162\037.protocol.Contract.ContractType\022\017" +
+      "\n\007payload\030\002 \001(\t\022\017\n\007version\030\003 \001(\003\022\r\n\005owne" +
+      "r\030\004 \001(\t\"\036\n\014ContractType\022\016\n\nJAVASCRIPT\020\000\"" +
+      "\316\001\n\026OperationCreateAccount\022\024\n\014dest_addre" +
+      "ss\030\001 \001(\t\022$\n\010contract\030\002 \001(\0132\022.protocol.Co" +
+      "ntract\022(\n\004priv\030\003 \001(\0132\032.protocol.AccountP" +
+      "rivilege\022$\n\tmetadatas\030\004 \003(\0132\021.protocol.K" +
+      "eyPair\022\024\n\014init_balance\030\005 \001(\003\022\022\n\ninit_inp" +
+      "ut\030\006 \001(\t\"X\n\024OperationSetMetadata\022\013\n\003key\030",
+      "\001 \001(\t\022\r\n\005value\030\002 \001(\t\022\017\n\007version\030\003 \001(\003\022\023\n" +
+      "\013delete_flag\030\004 \001(\010*#\n\005Limit\022\013\n\007UNKNOWN\020\000" +
+      "\022\r\n\tSIGNATURE\020dB(\n\032org.zetrix.crypto.pro" +
+      "tobufZ\n./protocolb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -28595,32 +29915,38 @@ public final class Chain {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetPrivilege_descriptor,
         new java.lang.String[] { "MasterWeight", "Signers", "TxThreshold", "TypeThresholds", });
-    internal_static_protocol_Operation_descriptor =
+    internal_static_protocol_OperationUpgradeContract_descriptor =
       getDescriptor().getMessageTypes().get(15);
+    internal_static_protocol_OperationUpgradeContract_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_protocol_OperationUpgradeContract_descriptor,
+        new java.lang.String[] { "DestAddress", "SPayload", "Payload", "SOwner", "Owner", });
+    internal_static_protocol_Operation_descriptor =
+      getDescriptor().getMessageTypes().get(16);
     internal_static_protocol_Operation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Operation_descriptor,
-        new java.lang.String[] { "Type", "SourceAddress", "Metadata", "ExprCondition", "CreateAccount", "IssueAsset", "PayAsset", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", "SetPrivilege", });
+        new java.lang.String[] { "Type", "SourceAddress", "Metadata", "ExprCondition", "CreateAccount", "IssueAsset", "PayAsset", "SetMetadata", "SetSignerWeight", "SetThreshold", "PayCoin", "Log", "SetPrivilege", "UpgradeContract", });
     internal_static_protocol_OperationSetThreshold_descriptor =
-      getDescriptor().getMessageTypes().get(16);
+      getDescriptor().getMessageTypes().get(17);
     internal_static_protocol_OperationSetThreshold_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetThreshold_descriptor,
         new java.lang.String[] { "TxThreshold", "TypeThresholds", });
     internal_static_protocol_Transaction_descriptor =
-      getDescriptor().getMessageTypes().get(17);
+      getDescriptor().getMessageTypes().get(18);
     internal_static_protocol_Transaction_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Transaction_descriptor,
         new java.lang.String[] { "SourceAddress", "Nonce", "ExprCondition", "Operations", "Metadata", "FeeLimit", "GasPrice", "CeilLedgerSeq", "ChainId", });
     internal_static_protocol_Signer_descriptor =
-      getDescriptor().getMessageTypes().get(18);
+      getDescriptor().getMessageTypes().get(19);
     internal_static_protocol_Signer_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Signer_descriptor,
         new java.lang.String[] { "Address", "Weight", });
     internal_static_protocol_Trigger_descriptor =
-      getDescriptor().getMessageTypes().get(19);
+      getDescriptor().getMessageTypes().get(20);
     internal_static_protocol_Trigger_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Trigger_descriptor,
@@ -28632,49 +29958,49 @@ public final class Chain {
         internal_static_protocol_Trigger_OperationTrigger_descriptor,
         new java.lang.String[] { "Hash", "Index", });
     internal_static_protocol_TransactionEnv_descriptor =
-      getDescriptor().getMessageTypes().get(20);
+      getDescriptor().getMessageTypes().get(21);
     internal_static_protocol_TransactionEnv_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnv_descriptor,
         new java.lang.String[] { "Transaction", "Signatures", "Trigger", });
     internal_static_protocol_TransactionEnvStore_descriptor =
-      getDescriptor().getMessageTypes().get(21);
+      getDescriptor().getMessageTypes().get(22);
     internal_static_protocol_TransactionEnvStore_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnvStore_descriptor,
         new java.lang.String[] { "TransactionEnv", "ErrorCode", "ErrorDesc", "LedgerSeq", "CloseTime", "Hash", "ActualFee", "ContractTxHashes", });
     internal_static_protocol_TransactionEnvSet_descriptor =
-      getDescriptor().getMessageTypes().get(22);
+      getDescriptor().getMessageTypes().get(23);
     internal_static_protocol_TransactionEnvSet_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_TransactionEnvSet_descriptor,
         new java.lang.String[] { "Txs", });
     internal_static_protocol_ConsensusValueValidation_descriptor =
-      getDescriptor().getMessageTypes().get(23);
+      getDescriptor().getMessageTypes().get(24);
     internal_static_protocol_ConsensusValueValidation_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ConsensusValueValidation_descriptor,
         new java.lang.String[] { "ExpireTxIds", "ErrorTxIds", });
     internal_static_protocol_ConsensusValue_descriptor =
-      getDescriptor().getMessageTypes().get(24);
+      getDescriptor().getMessageTypes().get(25);
     internal_static_protocol_ConsensusValue_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_ConsensusValue_descriptor,
         new java.lang.String[] { "Txset", "CloseTime", "PreviousProof", "LedgerSeq", "PreviousLedgerHash", "LedgerUpgrade", "Validation", });
     internal_static_protocol_Contract_descriptor =
-      getDescriptor().getMessageTypes().get(25);
+      getDescriptor().getMessageTypes().get(26);
     internal_static_protocol_Contract_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_Contract_descriptor,
-        new java.lang.String[] { "Type", "Payload", });
+        new java.lang.String[] { "Type", "Payload", "Version", "Owner", });
     internal_static_protocol_OperationCreateAccount_descriptor =
-      getDescriptor().getMessageTypes().get(26);
+      getDescriptor().getMessageTypes().get(27);
     internal_static_protocol_OperationCreateAccount_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationCreateAccount_descriptor,
         new java.lang.String[] { "DestAddress", "Contract", "Priv", "Metadatas", "InitBalance", "InitInput", });
     internal_static_protocol_OperationSetMetadata_descriptor =
-      getDescriptor().getMessageTypes().get(27);
+      getDescriptor().getMessageTypes().get(28);
     internal_static_protocol_OperationSetMetadata_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_protocol_OperationSetMetadata_descriptor,

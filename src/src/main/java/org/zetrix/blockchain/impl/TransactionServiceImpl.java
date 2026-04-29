@@ -542,6 +542,34 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionGetInfoResponse;
     }
 
+    @Override
+    public TransactionGetCacheResponse getCache(TransactionGetCacheRequest transactionGetCacheRequest) {
+        TransactionGetCacheResponse transactionGetCacheResponse = new TransactionGetCacheResponse();
+        TransactionGetCacheResult transactionGetCacheResult = new TransactionGetCacheResult();
+        try {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
+                throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            }
+            if (Tools.isEmpty(transactionGetCacheRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String hash = transactionGetCacheRequest.getHash();
+            if (!Tools.isEmpty(hash) && hash.length() != Constant.HASH_HEX_LENGTH) {
+                throw new SDKException(SdkError.INVALID_HASH_ERROR);
+            }
+            String getCacheUrl = General.getInstance().transactionGetCacheUrl(hash, transactionGetCacheRequest.getLimit());
+            String result = HttpKit.get(getCacheUrl);
+            transactionGetCacheResponse = JSONObject.parseObject(result, TransactionGetCacheResponse.class);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            transactionGetCacheResponse.buildResponse(errorCode, errorDesc, transactionGetCacheResult);
+        } catch (Exception e) {
+            transactionGetCacheResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionGetCacheResult);
+        }
+        return transactionGetCacheResponse;
+    }
+
     /**
      * @Author riven
      * @Method buildOperations
@@ -583,6 +611,9 @@ public class TransactionServiceImpl implements TransactionService {
                     break;
                 case LOG_CREATE:
                     operation = LogServiceImpl.create((LogCreateOperation) operationBase[i]);
+                    break;
+                case CONTRACT_UPGRADE:
+                    operation = ContractServiceImpl.upgrade((ContractUpgradeOperation) operationBase[i], transSourceAddress);
                     break;
                 default:
                     throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);

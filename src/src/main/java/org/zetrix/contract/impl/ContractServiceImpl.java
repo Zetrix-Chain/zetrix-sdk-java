@@ -21,6 +21,7 @@ import org.zetrix.model.request.ContractGetInfoRequest;
 import org.zetrix.model.request.operation.ContractCreateOperation;
 import org.zetrix.model.request.operation.ContractInvokeByAssetOperation;
 import org.zetrix.model.request.operation.ContractInvokeByGasOperation;
+import org.zetrix.model.request.operation.ContractUpgradeOperation;
 import org.zetrix.model.response.*;
 import org.zetrix.model.response.result.ContractCallResult;
 import org.zetrix.model.response.result.ContractCheckValidResult;
@@ -221,6 +222,62 @@ public class ContractServiceImpl implements ContractService {
             if (!Tools.isEmpty(input)) {
                 operationPayCoin.setInput(input);
             }
+        } catch (SDKException sdkException) {
+            throw sdkException;
+        } catch (Exception e) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), e.getMessage());
+        }
+
+        return operation.build();
+    }
+
+    public static Chain.Operation upgrade(ContractUpgradeOperation contractUpgradeOperation, String transSourceAddress) throws SDKException {
+        Chain.Operation.Builder operation = null;
+        try {
+            String sourceAddress = contractUpgradeOperation.getSourceAddress();
+            if (!Tools.isEmpty(sourceAddress) && !PublicKey.isAddressValid(sourceAddress)) {
+                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
+            }
+            String contractAddress = contractUpgradeOperation.getContractAddress();
+            if (!PublicKey.isAddressValid(contractAddress)) {
+                throw new SDKException(SdkError.INVALID_DESTADDRESS_ERROR);
+            }
+            boolean sPayload = contractUpgradeOperation.getsPayload();
+            boolean sOwner = contractUpgradeOperation.getsOwner();
+            if (!sPayload && !sOwner) {
+                throw new SDKException(SdkError.S_PAYLOAD_S_OWNER_NULL_ERROR);
+            }
+
+            String payload = contractUpgradeOperation.getPayload();
+            if (sPayload && Tools.isNULL(payload)) {
+                throw new SDKException(SdkError.PAYLOAD_EMPTY_ERROR);
+            }
+
+            String owner = contractUpgradeOperation.getOwner();
+            if (sOwner && Tools.isNULL(owner)) {
+                throw new SDKException(SdkError.OWNER_NULL_ERROR);
+            }
+            String metadata = contractUpgradeOperation.getMetadata();
+            if (!checkContractValid(contractAddress)) {
+                throw new SDKException(SdkError.CONTRACTADDRESS_NOT_CONTRACTACCOUNT_ERROR);
+            }
+
+            operation = Chain.Operation.newBuilder();
+            operation.setType(Chain.Operation.Type.UPGRADE_CONTRACT);
+            if (!Tools.isEmpty(sourceAddress)) {
+                operation.setSourceAddress(sourceAddress);
+            }
+            if (!Tools.isEmpty(metadata)) {
+                operation.setMetadata(ByteString.copyFromUtf8(metadata));
+            }
+
+            Chain.OperationUpgradeContract.Builder operationUpgrade = operation.getUpgradeContractBuilder();
+            operationUpgrade.setDestAddress(contractAddress);
+            operationUpgrade.setPayload(payload);
+            operationUpgrade.setSPayload(sPayload);
+            operationUpgrade.setSOwner(sOwner);
+            operationUpgrade.setOwner(owner);
+
         } catch (SDKException sdkException) {
             throw sdkException;
         } catch (Exception e) {

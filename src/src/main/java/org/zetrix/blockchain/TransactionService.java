@@ -63,4 +63,13 @@ public interface TransactionService {
      * @Date 2018/7/5 21:14
      */
     public TransactionGetInfoResponse getInfo(TransactionGetInfoRequest transactionGetInfoRequest);
+
+    /**
+     * @Author riven
+     * @Method getCache
+     * @Params [TransactionGetCacheRequest]
+     * @Return TransactionGetCacheResponse
+     * @Date 2018/7/5 21:14
+     */
+    public TransactionGetCacheResponse getCache(TransactionGetCacheRequest transactionGetCacheRequest);
 }

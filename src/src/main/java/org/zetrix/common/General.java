@@ -62,6 +62,14 @@ public class General {
         return url + "/getTransactionHistory?hash=" + URLEncoder.encode(hash, "utf8");
     }
 
+    public String transactionGetCacheUrl(String hash, Integer limit) throws UnsupportedEncodingException {
+        return url + "/getTransactionCache" + (Tools.isNULL(hash) ? "" : "?hash=" + URLEncoder.encode(hash, "utf8")) +
+                (Tools.isNULL(limit) ? "" : "limit=" + limit);
+    }
+
+    public String helloUrl() {
+        return url + "/hello";
+    }
 
     public String blockGetNumberUrl() {
         return url + "/getLedger";

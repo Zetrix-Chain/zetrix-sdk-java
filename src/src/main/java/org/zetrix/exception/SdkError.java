@@ -305,6 +305,14 @@ public enum SdkError {
     TOKEN_NOT_FOUND_ERROR
             (11076, "The token is not found"),
     /*
+     * S_PAYLOAD_S_OWNER_NULL_ERROR
+     */
+    S_PAYLOAD_S_OWNER_NULL_ERROR(11077, "sPayload and sOwner cannot be null at the same time"),
+    /*
+     * OWNER_NULL_ERROR
+     */
+    OWNER_NULL_ERROR(11078, "owner parameter cannot be null"),
+    /*
      * CONNECTN_BLOCKCHAIN_ERROR
      */
     CONNECTN_BLOCKCHAIN_ERROR(19999, "Failed to connect blockchain"),
