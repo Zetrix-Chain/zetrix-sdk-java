@@ -94,6 +94,10 @@ public class ContractServiceImpl implements ContractService {
                 contract.setType(contractType);
             }
             contract.setPayload(payload);
+            String owner = contractCreateOperation.getOwner();
+            if (!Tools.isEmpty(owner)) {
+                contract.setOwner(owner);
+            }
             Chain.AccountPrivilege.Builder accountPrivilege = operationCreateContract.getPrivBuilder();
             accountPrivilege.setMasterWeight(0);
             Chain.AccountThreshold.Builder accountThreshold = accountPrivilege.getThresholdsBuilder();

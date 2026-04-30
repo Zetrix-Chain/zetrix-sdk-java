@@ -33,20 +33,14 @@ public class V2FeaturesDemo {
     private static final String CONTRACT_V1 =
             "'use strict';\n" +
             "function init(bar) { return; }\n" +
-            "function main(input) {\n" +
-            "  let p = JSON.parse(input);\n" +
-            "  storageStore('version', 'v1');\n" +
-            "}\n" +
-            "function query(input) { return storageLoad('version') || 'v1'; }";
+            "function main(input) { return; }\n" +
+            "function query(input) { return 'v1'; }";
 
     private static final String CONTRACT_V2 =
             "'use strict';\n" +
             "function init(bar) { return; }\n" +
-            "function main(input) {\n" +
-            "  let p = JSON.parse(input);\n" +
-            "  storageStore('version', 'v2');\n" +
-            "}\n" +
-            "function query(input) { return storageLoad('version') || 'v2'; }";
+            "function main(input) { return; }\n" +
+            "function query(input) { return 'v2'; }";
 
     SDK sdk = SDK.getInstance(NODE_URL);
 
@@ -154,6 +148,7 @@ public class V2FeaturesDemo {
         createOp.setSourceAddress(fromAddress);
         createOp.setInitBalance(ToBaseUnit.ToUGas("0.01"));
         createOp.setPayload(payload);
+        createOp.setOwner(fromAddress);
 
         TransactionEvaluateFeeRequest feeReq = new TransactionEvaluateFeeRequest();
         feeReq.setSourceAddress(fromAddress);
