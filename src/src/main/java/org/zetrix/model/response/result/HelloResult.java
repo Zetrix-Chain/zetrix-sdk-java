@@ -1,14 +1,25 @@
 package org.zetrix.model.response.result;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class HelloResult {
+    @JSONField(name = "current_time")
     private String currentTime;
+    @JSONField(name = "hash_type")
     private Integer hashType;
+    @JSONField(name = "ledger_version")
     private String ledgerVersion;
+    @JSONField(name = "license_version")
     private String licenseVersion;
+    @JSONField(name = "monitor_version")
     private String monitorVersion;
+    @JSONField(name = "network_id")
     private Integer networkId;
+    @JSONField(name = "overlay_version")
     private String overlayVersion;
-    private Integer websocketAddress;
+    @JSONField(name = "websocket_address")
+    private String websocketAddress;
+    @JSONField(name = "ztx_version")
     private String ztxVersion;
 
     public String getCurrentTime() {
@@ -67,11 +78,11 @@ public class HelloResult {
         this.overlayVersion = overlayVersion;
     }
 
-    public Integer getWebsocketAddress() {
+    public String getWebsocketAddress() {
         return websocketAddress;
     }
 
-    public void setWebsocketAddress(Integer websocketAddress) {
+    public void setWebsocketAddress(String websocketAddress) {
         this.websocketAddress = websocketAddress;
     }
 

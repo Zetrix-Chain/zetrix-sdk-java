@@ -4,6 +4,8 @@ import org.zetrix.SDK;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author riven
@@ -63,8 +65,10 @@ public class General {
     }
 
     public String transactionGetCacheUrl(String hash, Integer limit) throws UnsupportedEncodingException {
-        return url + "/getTransactionCache" + (Tools.isNULL(hash) ? "" : "?hash=" + URLEncoder.encode(hash, "utf8")) +
-                (Tools.isNULL(limit) ? "" : "limit=" + limit);
+        List<String> qs = new ArrayList<>();
+        if (!Tools.isEmpty(hash)) qs.add("hash=" + URLEncoder.encode(hash, "utf8"));
+        if (!Tools.isNULL(limit)) qs.add("limit=" + limit);
+        return url + "/getTransactionCache" + (qs.isEmpty() ? "" : "?" + String.join("&", qs));
     }
 
     public String helloUrl() {

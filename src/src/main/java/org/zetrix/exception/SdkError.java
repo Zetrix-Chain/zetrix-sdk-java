@@ -307,7 +307,7 @@ public enum SdkError {
     /*
      * S_PAYLOAD_S_OWNER_NULL_ERROR
      */
-    S_PAYLOAD_S_OWNER_NULL_ERROR(11077, "sPayload and sOwner cannot be null at the same time"),
+    S_PAYLOAD_S_OWNER_NULL_ERROR(11077, "sPayload and sOwner cannot both be false — at least one must be set"),
     /*
      * OWNER_NULL_ERROR
      */

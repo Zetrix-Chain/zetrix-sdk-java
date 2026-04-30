@@ -80,6 +80,10 @@ public class SDK {
             String helloUrl = General.getInstance().helloUrl();
             String result = HttpKit.get(helloUrl);
             helloResult = JSONObject.parseObject(result, HelloResult.class);
+            if (helloResult == null) {
+                helloResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, new HelloResult());
+                return helloResponse;
+            }
             helloResponse.buildResponse(SdkError.SUCCESS, helloResult);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
             helloResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, helloResult);
