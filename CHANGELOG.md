@@ -1,5 +1,19 @@
 # Changelog — zetrix-sdk-java
 
+## [1.1.1] — 2026-11-20
+
+### Security
+- **HTTPS certificate and hostname checks are now on**. `HttpKit` used a TrustManager that accepted any certificate and a HostnameVerifier that accepted any hostname, so all HTTPS calls to a node — including transaction submission and fee evaluation — could be intercepted and answered by anyone on the network path. HTTPS now uses the JVM's default trust store and hostname verification. A node with an expired, self-signed, untrusted or wrong-host certificate is refused and the call returns a connection error. See "HTTPS and node certificates" in the README for private-CA nodes.
+
+### Changed
+- Depends on `zetrix-encryption` **1.2.0.RELEASE** (was 1.1.0.RELEASE). Upgrade both together.
+- No public API changes: `HttpKit` and all service method signatures are unchanged.
+
+### Added
+- `HttpKitTlsTest` — rejects self-signed and wrong-hostname certificates, accepts a trusted certificate for the right hostname.
+
+---
+
 ## [1.1.0] — 2026-04-21
 
 ### Added

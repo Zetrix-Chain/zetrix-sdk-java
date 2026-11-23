@@ -22,7 +22,7 @@ Java SDK for the Zetrix blockchain. Supports account management, transaction bui
 <dependency>
   <groupId>org.zetrix.sdk</groupId>
   <artifactId>zetrix-sdk</artifactId>
-  <version>1.1.0</version>
+  <version>1.1.1.RELEASE</version>
 </dependency>
 ```
 
@@ -143,6 +143,22 @@ sdk.getTransactionService().evaluateFee(feeReq);
 | ED25519, SM2 | `ZTX3` |
 | Dilithium3 | `ZTX4` |
 | Hybrid | `ZTX5` |
+
+## HTTPS and node certificates
+
+The SDK checks the server certificate and hostname on every HTTPS call, using the JVM's default trust store. A node whose certificate is expired, self-signed, signed by a CA the JVM does not trust, or issued for a different hostname is refused with an `SSLHandshakeException`; the SDK call then returns a connection error (for example `CONNECTNETWORK_ERROR`). Before 1.1.1.RELEASE these checks were switched off.
+
+Use an `https://` node URL in production. Plain `http://` URLs still work but are not encrypted, so their traffic can be read or altered on the network.
+
+The public Zetrix nodes (`https://node.zetrix.com`, `https://test-node.zetrix.com`) use a GlobalSign certificate that current JDKs trust. If you run on an old Java 8 build and the connection is refused, update the JDK.
+
+To reach a node that uses a private or internal CA, give the JVM a trust store that contains that CA:
+
+```bash
+java -Djavax.net.ssl.trustStore=/path/to/truststore.p12      -Djavax.net.ssl.trustStorePassword=<password>      -Djavax.net.ssl.trustStoreType=PKCS12      -jar your-app.jar
+```
+
+or import the CA into the JDK's `cacerts` with `keytool -importcert -cacerts -alias <name> -file ca.crt`. Do not turn certificate checks off.
 
 ## Running the Examples
 

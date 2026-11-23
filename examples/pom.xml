@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.zetrix.sdk</groupId>
         <artifactId>zetrix-sdk-java</artifactId>
-        <version>1.1.0.RELEASE</version>
+        <version>1.1.1.RELEASE</version>
     </parent>
 
     <artifactId>zetrix-sdk-example</artifactId>
@@ -16,7 +16,7 @@
         <dependency>
             <groupId>org.zetrix.sdk</groupId>
             <artifactId>zetrix-sdk</artifactId>
-            <version>1.1.0.RELEASE</version>
+            <version>1.1.1.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
