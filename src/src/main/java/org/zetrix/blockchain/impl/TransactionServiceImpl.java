@@ -30,6 +30,7 @@ import org.zetrix.model.response.*;
 import org.zetrix.model.response.result.*;
 import org.zetrix.model.request.*;
 import org.zetrix.model.response.result.data.Signature;
+import org.zetrix.model.response.result.data.TestTx;
 import org.zetrix.token.impl.AssetServiceImpl;
 import org.zetrix.token.impl.GasServiceImpl;
 import org.zetrix.model.request.operation.*;
@@ -186,82 +187,196 @@ public class TransactionServiceImpl implements TransactionService {
      * @Params [TransactionEvaluateFeeRequest]
      * @Return TransactionEvaluateFeeResponse
      * @Date 2018/7/5 19:04
+     *
+     * Supports 3 active scenarios:
+     *   Scenario 1 (signatureKeys): two-step sign→estimate→rebuild→re-sign; result carries transactionBlob+signatures
+     *   Scenario 2/4 (transactionBlob ± signatures): direct passthrough to /testTransaction
+     *   Scenario 3 (legacy): transaction_json path, signatureNumber drives estimate
      */
     @Override
-    public TransactionEvaluateFeeResponse evaluateFee(TransactionEvaluateFeeRequest transactionEvaluateFeeRequest) {
-        TransactionEvaluateFeeResponse transactionEvaluateFeeResponse = new TransactionEvaluateFeeResponse();
-        TransactionEvaluateFeeResult transactionEvaluateFeeResult = new TransactionEvaluateFeeResult();
+    public TransactionEvaluateFeeResponse evaluateFee(TransactionEvaluateFeeRequest req) {
+        TransactionEvaluateFeeResponse response = new TransactionEvaluateFeeResponse();
+        TransactionEvaluateFeeResult result = new TransactionEvaluateFeeResult();
         try {
-            if (Tools.isEmpty(General.getInstance().getUrl())) {
-                throw new SDKException(SdkError.URL_EMPTY_ERROR);
-            }
-            if (Tools.isEmpty(transactionEvaluateFeeRequest)) {
-                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
-            }
-            // check sourceAddress
-            String sourceAddress = transactionEvaluateFeeRequest.getSourceAddress();
-            if (!PublicKey.isAddressValid(sourceAddress)) {
-                throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
-            }
-            // check nonce
-            Long nonce = transactionEvaluateFeeRequest.getNonce();
-            if (Tools.isEmpty(nonce) || nonce < 1) {
-                throw new SDKException(SdkError.INVALID_NONCE_ERROR);
-            }
-            // check signatureNum
-            Integer signatureNum = transactionEvaluateFeeRequest.getSignatureNumber();
-            if (Tools.isEmpty(signatureNum) || signatureNum < 1) {
-                throw new SDKException(SdkError.INVALID_SIGNATURENUMBER_ERROR);
-            }
-            // check ceilLedgerSeq
-            Long ceilLedgerSeq = transactionEvaluateFeeRequest.getCeilLedgerSeq();
-            if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) {
-                throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
-            }
-            // check metadata
-            String metadata = transactionEvaluateFeeRequest.getMetadata();
-            // build transaction
-            Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
-            BaseOperation[] baseOperations = transactionEvaluateFeeRequest.getOperations();
-            if (Tools.isEmpty(baseOperations)) {
-                throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
-            }
-            buildOperations(baseOperations, sourceAddress, transaction);
-            transaction.setSourceAddress(sourceAddress);
-            transaction.setNonce(nonce);
-            if (!Tools.isEmpty(metadata)) {
-                transaction.setMetadata(ByteString.copyFromUtf8(metadata));
-            }
-            if (!Tools.isEmpty(ceilLedgerSeq)) {
-                transaction.setCeilLedgerSeq(ceilLedgerSeq);
-            }
-            // protocol buffer to json
-            JsonFormat jsonFormat = new JsonFormat();
-            String transactionStr = jsonFormat.printToString(transaction.build());
-            JSONObject transactionJson = JSONObject.parseObject(transactionStr);
+            if (Tools.isEmpty(General.getInstance().getUrl())) throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            if (Tools.isEmpty(req)) throw new SDKException(SdkError.REQUEST_NULL_ERROR);
 
-            // build testTransaction request
-            JSONObject testTransactionRequest = new JSONObject();
-            JSONArray transactionItems = new JSONArray();
-            JSONObject transactionItem = new JSONObject();
-            transactionItem.put("transaction_json", transactionJson);
-            transactionItems.add(transactionItem);
-            testTransactionRequest.put("items", transactionItems);
+            String prebuiltBlob = req.getTransactionBlob();
+            String[] signatureKeys = req.getSignatureKeys();
+            boolean hasBlob = !Tools.isEmpty(prebuiltBlob);
+            boolean hasKeys = !Tools.isEmpty(signatureKeys);
+            // Reject requests that mix inputs from different scenarios instead of silently
+            // picking one: a blob with keys or operations, or signatures without a blob.
+            if ((hasBlob && (hasKeys || !Tools.isEmpty(req.getOperations())))
+                    || (!hasBlob && !Tools.isEmpty(req.getSignatures()))) {
+                throw new SDKException(SdkError.INVALID_EVALUATE_FEE_INPUT_ERROR);
+            }
 
-            String evaluationFeeUrl = General.getInstance().transactionEvaluationFee();
-            String result = HttpKit.post(evaluationFeeUrl, testTransactionRequest.toJSONString());
-            transactionEvaluateFeeResponse = JSON.parseObject(result, TransactionEvaluateFeeResponse.class);
-
-        } catch (SDKException apiException) {
-            Integer errorCode = apiException.getErrorCode();
-            String errorDesc = apiException.getErrorDesc();
-            transactionEvaluateFeeResponse.buildResponse(errorCode, errorDesc, transactionEvaluateFeeResult);
+            if (hasBlob) {
+                response = evaluateFeeWithPrebuiltBlob(prebuiltBlob, req.getSignatures());
+            } else if (hasKeys) {
+                result = evaluateFeeWithSignatureKeys(req, signatureKeys);
+                response.buildResponse(SdkError.SUCCESS, result);
+            } else {
+                response = evaluateFeeLegacy(req);
+            }
+        } catch (SDKException e) {
+            response.buildResponse(e.getErrorCode(), e.getErrorDesc(), result);
         } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException | IOException e) {
-            transactionEvaluateFeeResponse.buildResponse(SdkError.CONNECTNETWORK_ERROR, transactionEvaluateFeeResult);
+            response.buildResponse(SdkError.CONNECTNETWORK_ERROR, result);
         } catch (Exception e) {
-            transactionEvaluateFeeResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionEvaluateFeeResult);
+            response.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), result);
         }
-        return transactionEvaluateFeeResponse;
+        return response;
+    }
+
+    /** Scenario 2/4: validate and pass a pre-built blob directly to /testTransaction. */
+    private TransactionEvaluateFeeResponse evaluateFeeWithPrebuiltBlob(String prebuiltBlob, Signature[] signatures)
+            throws SDKException, NoSuchAlgorithmException, KeyManagementException, NoSuchProviderException, IOException {
+        if (!prebuiltBlob.matches("[0-9a-fA-F]+") || prebuiltBlob.length() % 2 != 0) {
+            throw new SDKException(SdkError.INVALID_BLOB_ERROR);
+        }
+        return postBlobToTestTransaction(prebuiltBlob, signatures);
+    }
+
+    /** Scenario 1: two-step sign→estimate→rebuild→re-sign; returns result with ready-to-submit blob+signatures. */
+    private TransactionEvaluateFeeResult evaluateFeeWithSignatureKeys(
+            TransactionEvaluateFeeRequest req, String[] signatureKeys)
+            throws SDKException, NoSuchAlgorithmException, KeyManagementException, NoSuchProviderException, IOException {
+        if (!PublicKey.isAddressValid(req.getSourceAddress())) throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
+        Long nonce = req.getNonce();
+        if (Tools.isEmpty(nonce) || nonce < 1) throw new SDKException(SdkError.INVALID_NONCE_ERROR);
+        Long ceilLedgerSeq = req.getCeilLedgerSeq();
+        if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
+        if (Tools.isEmpty(req.getOperations())) throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
+        for (String key : signatureKeys) {
+            if (!PrivateKey.isPrivateKeyValid(key)) throw new SDKException(SdkError.PRIVATEKEY_ONE_ERROR);
+        }
+        long initGasPrice = (req.getGasPrice() != null && req.getGasPrice() > 0) ? req.getGasPrice() : 10L;
+
+        // Step 1: estimate with feeLimit=0
+        byte[] tempBlobBytes = buildEvaluationBlob(req, 0L, initGasPrice);
+        Signature[] tempSigs = signBlobBytes(tempBlobBytes, signatureKeys);
+        TransactionEvaluateFeeResponse feeResponse = postBlobToTestTransaction(
+                HexFormat.byteToHex(tempBlobBytes), tempSigs);
+        // The node reports a failed test run (for example a missing account or a failing
+        // contract call) with a non-zero error_code. Return that error, not a fee estimate.
+        Integer nodeErrorCode = feeResponse.getErrorCode();
+        if (nodeErrorCode != null && nodeErrorCode != 0) {
+            throw new SDKException(nodeErrorCode, feeResponse.getErrorDesc());
+        }
+        TestTx[] txs = feeResponse.getResult() != null ? feeResponse.getResult().getTxs() : null;
+        if (Tools.isEmpty(txs) || txs[0].getTransactionEnv() == null
+                || txs[0].getTransactionEnv().getTransactionFees() == null) {
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), "Fee estimation failed: the node returned no fee");
+        }
+        Long estimatedFeeLimit = txs[0].getTransactionEnv().getTransactionFees().getFeeLimit();
+        Long estimatedGasPrice = txs[0].getTransactionEnv().getTransactionFees().getGasPrice();
+
+        // Step 2: rebuild with actual fees and re-sign
+        byte[] finalBlobBytes = buildEvaluationBlob(req, estimatedFeeLimit, estimatedGasPrice);
+        Signature[] finalSigs = signBlobBytes(finalBlobBytes, signatureKeys);
+
+        TransactionEvaluateFeeResult result = new TransactionEvaluateFeeResult();
+        result.setTxs(txs);
+        result.setTransactionBlob(HexFormat.byteToHex(finalBlobBytes));
+        result.setSignatures(finalSigs);
+        return result;
+    }
+
+    /** Scenario 3: legacy transaction_json path, driven by signatureNumber. */
+    private TransactionEvaluateFeeResponse evaluateFeeLegacy(TransactionEvaluateFeeRequest req)
+            throws SDKException, NoSuchAlgorithmException, KeyManagementException, NoSuchProviderException, IOException {
+        if (!PublicKey.isAddressValid(req.getSourceAddress())) throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
+        Long nonce = req.getNonce();
+        if (Tools.isEmpty(nonce) || nonce < 1) throw new SDKException(SdkError.INVALID_NONCE_ERROR);
+        Integer signatureNum = req.getSignatureNumber();
+        if (Tools.isEmpty(signatureNum) || signatureNum < 1) throw new SDKException(SdkError.INVALID_SIGNATURENUMBER_ERROR);
+        Long ceilLedgerSeq = req.getCeilLedgerSeq();
+        if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
+        BaseOperation[] ops = req.getOperations();
+        if (Tools.isEmpty(ops)) throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
+
+        Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
+        buildOperations(ops, req.getSourceAddress(), transaction);
+        transaction.setSourceAddress(req.getSourceAddress());
+        transaction.setNonce(nonce);
+        String metadata = req.getMetadata();
+        if (!Tools.isEmpty(metadata)) transaction.setMetadata(ByteString.copyFromUtf8(metadata));
+        if (!Tools.isEmpty(ceilLedgerSeq)) transaction.setCeilLedgerSeq(ceilLedgerSeq);
+
+        JsonFormat jsonFormat = new JsonFormat();
+        String transactionStr = jsonFormat.printToString(transaction.build());
+        JSONObject transactionJson = JSONObject.parseObject(transactionStr);
+        JSONObject testTransactionRequest = new JSONObject();
+        JSONArray transactionItems = new JSONArray();
+        JSONObject transactionItem = new JSONObject();
+        transactionItem.put("transaction_json", transactionJson);
+        transactionItems.add(transactionItem);
+        testTransactionRequest.put("items", transactionItems);
+        String result = HttpKit.post(General.getInstance().transactionEvaluationFee(),
+                testTransactionRequest.toJSONString());
+        return JSON.parseObject(result, TransactionEvaluateFeeResponse.class);
+    }
+
+    private byte[] buildEvaluationBlob(TransactionEvaluateFeeRequest req, Long feeLimit, Long gasPrice) throws SDKException {
+        Chain.Transaction.Builder transaction = Chain.Transaction.newBuilder();
+        buildOperations(req.getOperations(), req.getSourceAddress(), transaction);
+        transaction.setSourceAddress(req.getSourceAddress());
+        transaction.setNonce(req.getNonce());
+        transaction.setFeeLimit(feeLimit);
+        transaction.setGasPrice(gasPrice);
+        String metadata = req.getMetadata();
+        if (!Tools.isEmpty(metadata)) {
+            transaction.setMetadata(ByteString.copyFromUtf8(metadata));
+        }
+        Long ceilLedgerSeq = req.getCeilLedgerSeq();
+        if (!Tools.isEmpty(ceilLedgerSeq)) {
+            transaction.setCeilLedgerSeq(ceilLedgerSeq);
+        }
+        if (!Tools.isEmpty(SDK.getSdk().getChainId())) {
+            transaction.setChainId(SDK.getSdk().getChainId());
+        }
+        return transaction.build().toByteArray();
+    }
+
+    private Signature[] signBlobBytes(byte[] blobBytes, String[] privateKeys) throws SDKException {
+        try {
+            Signature[] signatures = new Signature[privateKeys.length];
+            for (int i = 0; i < privateKeys.length; i++) {
+                byte[] signBytes = PrivateKey.sign(blobBytes, privateKeys[i]);
+                String publicKey = PrivateKey.getEncPublicKey(privateKeys[i]);
+                signatures[i] = new Signature();
+                signatures[i].setSignData(HexFormat.byteToHex(signBytes));
+                signatures[i].setPublicKey(publicKey);
+            }
+            return signatures;
+        } catch (Exception e) {
+            throw new SDKException(SdkError.PRIVATEKEY_ONE_ERROR.getCode(), "Sign failed: " + e.getMessage());
+        }
+    }
+
+    private TransactionEvaluateFeeResponse postBlobToTestTransaction(String blobHex, Signature[] signatures)
+            throws NoSuchAlgorithmException, KeyManagementException, NoSuchProviderException, IOException {
+        JSONObject testTransactionRequest = new JSONObject();
+        JSONArray transactionItems = new JSONArray();
+        JSONObject transactionItem = new JSONObject();
+        transactionItem.put("transaction_blob", blobHex);
+        if (!Tools.isEmpty(signatures)) {
+            JSONArray sigItems = new JSONArray();
+            for (Signature sig : signatures) {
+                JSONObject sigItem = new JSONObject();
+                sigItem.put("sign_data", sig.getSignData());
+                sigItem.put("public_key", sig.getPublicKey());
+                sigItems.add(sigItem);
+            }
+            transactionItem.put("signatures", sigItems);
+        }
+        transactionItems.add(transactionItem);
+        testTransactionRequest.put("items", transactionItems);
+        String evaluationFeeUrl = General.getInstance().transactionEvaluationFee();
+        String result = HttpKit.post(evaluationFeeUrl, testTransactionRequest.toJSONString());
+        return JSON.parseObject(result, TransactionEvaluateFeeResponse.class);
     }
 
 
@@ -441,6 +556,34 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionGetInfoResponse;
     }
 
+    @Override
+    public TransactionGetCacheResponse getCache(TransactionGetCacheRequest transactionGetCacheRequest) {
+        TransactionGetCacheResponse transactionGetCacheResponse = new TransactionGetCacheResponse();
+        TransactionGetCacheResult transactionGetCacheResult = new TransactionGetCacheResult();
+        try {
+            if (Tools.isEmpty(General.getInstance().getUrl())) {
+                throw new SDKException(SdkError.URL_EMPTY_ERROR);
+            }
+            if (Tools.isEmpty(transactionGetCacheRequest)) {
+                throw new SDKException(SdkError.REQUEST_NULL_ERROR);
+            }
+            String hash = transactionGetCacheRequest.getHash();
+            if (!Tools.isEmpty(hash) && hash.length() != Constant.HASH_HEX_LENGTH) {
+                throw new SDKException(SdkError.INVALID_HASH_ERROR);
+            }
+            String getCacheUrl = General.getInstance().transactionGetCacheUrl(hash, transactionGetCacheRequest.getLimit());
+            String result = HttpKit.get(getCacheUrl);
+            transactionGetCacheResponse = JSONObject.parseObject(result, TransactionGetCacheResponse.class);
+        } catch (SDKException apiException) {
+            Integer errorCode = apiException.getErrorCode();
+            String errorDesc = apiException.getErrorDesc();
+            transactionGetCacheResponse.buildResponse(errorCode, errorDesc, transactionGetCacheResult);
+        } catch (Exception e) {
+            transactionGetCacheResponse.buildResponse(SdkError.SYSTEM_ERROR.getCode(), e.getMessage(), transactionGetCacheResult);
+        }
+        return transactionGetCacheResponse;
+    }
+
     /**
      * @Author riven
      * @Method buildOperations
@@ -482,6 +625,9 @@ public class TransactionServiceImpl implements TransactionService {
                     break;
                 case LOG_CREATE:
                     operation = LogServiceImpl.create((LogCreateOperation) operationBase[i]);
+                    break;
+                case CONTRACT_UPGRADE:
+                    operation = ContractServiceImpl.upgrade((ContractUpgradeOperation) operationBase[i], transSourceAddress);
                     break;
                 default:
                     throw new SDKException(SdkError.OPERATIONS_ONE_ERROR);

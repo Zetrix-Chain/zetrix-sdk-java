@@ -11,6 +11,7 @@ public class ContractCreateOperation extends BaseOperation {
     private Integer type;
     private String payload;
     private String initInput;
+    private String owner;
 
     public ContractCreateOperation() {
         operationType = OperationType.CONTRACT_CREATE;
@@ -114,5 +115,13 @@ public class ContractCreateOperation extends BaseOperation {
      */
     public void setInitInput(String initInput) {
         this.initInput = initInput;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

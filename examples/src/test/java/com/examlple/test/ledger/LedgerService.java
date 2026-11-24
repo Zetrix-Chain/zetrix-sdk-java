@@ -14,7 +14,7 @@ import org.zetrix.model.response.result.*;
  * @date
  */
 public class LedgerService {
-    private SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    private SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     @Test
     public void getNumber() {

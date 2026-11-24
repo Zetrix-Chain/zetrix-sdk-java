@@ -48,7 +48,7 @@ public class WebsocketDemo {
 
             // 消息订阅
             Overlay.ChainSubscribeTx.Builder chainSubscribeTx = Overlay.ChainSubscribeTx.newBuilder();
-            chainSubscribeTx.addAddress("ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3");
+            chainSubscribeTx.addAddress("ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T");
             if(!chain_message_one_.Send(Overlay.ChainMessageType.CHAIN_SUBSCRIBE_TX_VALUE, chainSubscribeTx.build().toByteArray())) {
                 logger_.error("send subscribe_tx failed");
             }

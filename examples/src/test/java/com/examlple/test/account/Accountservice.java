@@ -11,7 +11,7 @@ import org.zetrix.model.response.*;
  * @date
  */
 public class Accountservice {
-    private SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    private SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
     @Test(dataProvider = "addressProvide",dataProviderClass =AddressProvider.class )
     public void getNonce(String address)
     {

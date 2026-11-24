@@ -1,6 +1,7 @@
 package org.zetrix.model.request;
 
 import org.zetrix.model.request.operation.BaseOperation;
+import org.zetrix.model.response.result.data.Signature;
 
 import java.util.Arrays;
 
@@ -15,6 +16,12 @@ public class TransactionEvaluateFeeRequest {
     private int signatureNumber = 1;
     private Long ceilLedgerSeq;
     private String metadata;
+    // Scenario 2/4: pre-built blob (with optional signatures) for direct fee estimation
+    private String transactionBlob;
+    private Signature[] signatures;
+    // Scenario 1: private keys to sign a built blob for accurate two-step fee estimation
+    private String[] signatureKeys;
+    private Long gasPrice;
 
     /**
      * @Author riven
@@ -167,5 +174,45 @@ public class TransactionEvaluateFeeRequest {
      */
     public void setMetadata(String metadata) {
         this.metadata = metadata;
+    }
+
+    /** Scenario 2/4: hex-encoded pre-built transaction blob for direct fee estimation. */
+    public String getTransactionBlob() {
+        return transactionBlob;
+    }
+
+    /** Scenario 2/4: hex-encoded pre-built transaction blob for direct fee estimation. */
+    public void setTransactionBlob(String transactionBlob) {
+        this.transactionBlob = transactionBlob;
+    }
+
+    /** Scenario 2/4: optional pre-computed signatures to include alongside transactionBlob. */
+    public Signature[] getSignatures() {
+        return signatures;
+    }
+
+    /** Scenario 2/4: optional pre-computed signatures to include alongside transactionBlob. */
+    public void setSignatures(Signature[] signatures) {
+        this.signatures = signatures;
+    }
+
+    /** Scenario 1: encoded private key strings used for the two-step sign→estimate→re-sign flow. */
+    public String[] getSignatureKeys() {
+        return signatureKeys;
+    }
+
+    /** Scenario 1: encoded private key strings used for the two-step sign→estimate→re-sign flow. */
+    public void setSignatureKeys(String[] signatureKeys) {
+        this.signatureKeys = signatureKeys;
+    }
+
+    /** Scenario 1 only: override the initial gasPrice used in the two-step estimate (defaults to 10L if unset). */
+    public Long getGasPrice() {
+        return gasPrice;
+    }
+
+    /** Scenario 1 only: override the initial gasPrice used in the two-step estimate (defaults to 10L if unset). */
+    public void setGasPrice(Long gasPrice) {
+        this.gasPrice = gasPrice;
     }
 }

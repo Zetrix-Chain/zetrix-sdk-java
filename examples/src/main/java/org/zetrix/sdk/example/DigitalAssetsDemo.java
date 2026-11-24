@@ -29,7 +29,7 @@ import org.junit.Test;
 public class DigitalAssetsDemo {
     SDK sdk = SDK.getInstance("http://192.168.4.131:18333");
     String genesisAccount = "ZTX3Xbrrc5Q2cphyB73NymGBBXuAWjCSf2a8Q";
-    String genesisAccountPriv = "privBucs1BQLudyDfDQPGSGentAF5BGGcrsATBMaWGv2AuL1J76pW5qt";
+    String genesisAccountPriv = "YOUR_PRIVATE_KEY";
     String newAddress = "";
     String newPriv = "";
     String txHash = "";

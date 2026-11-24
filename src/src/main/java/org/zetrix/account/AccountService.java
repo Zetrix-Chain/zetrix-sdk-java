@@ -1,5 +1,6 @@
 package org.zetrix.account;
 
+import org.zetrix.encryption.model.KeyType;
 import org.zetrix.model.request.*;
 import org.zetrix.model.response.*;
 import org.zetrix.model.request.*;
@@ -28,6 +29,8 @@ public interface AccountService {
      * @Date 2018/7/3 12:56
      */
     public AccountCreateResponse create();
+
+    public AccountCreateResponse create(KeyType keyType);
 
     /**
      * @Author riven

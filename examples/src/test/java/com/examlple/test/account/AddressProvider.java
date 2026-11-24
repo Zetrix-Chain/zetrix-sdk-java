@@ -11,7 +11,7 @@ public class AddressProvider {
     @DataProvider(name = "addressProvide")
     public Object[][] addressProvide() {
         return new Object[][]{
-                {"ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3"},
+                {"ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T"},
                 {"ZTX3FaM7kHNttENVRxYzMGSX7bLKNRhQnBKFJ"},
                 {"ZTX3RamGgUv5cED5n2LXCJhi5YJXTXE9rqfiB"}
         };

@@ -6,9 +6,25 @@
 
     <groupId>org.zetrix.sdk</groupId>
     <artifactId>zetrix-sdk-java</artifactId>
-    <version>1.0.1.RELEASE</version>
+    <version>1.1.2.RELEASE</version>
 
     <packaging>pom</packaging>
+
+    <repositories>
+        <repository>
+            <id>zetrix-releases</id>
+            <name>releases</name>
+            <url>https://maven.zetrix.com/repository/releases/</url>
+        </repository>
+    </repositories>
+
+    <distributionManagement>
+        <repository>
+            <id>zetrix-releases</id>
+            <name>releases</name>
+            <url>https://maven.zetrix.com/repository/releases/</url>
+        </repository>
+    </distributionManagement>
 
     <modules>
 		<module>src</module>

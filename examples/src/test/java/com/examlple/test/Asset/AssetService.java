@@ -11,12 +11,12 @@ import org.zetrix.model.response.AssetGetInfoResponse;
  * @date
  */
 public class AssetService {
-    private SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    private SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
     @Test(groups = {"testg"})
     public void getInfo() {
-        String address = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String address = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         String code = "102";
-        String issuer = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String issuer = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AssetGetInfoRequest request = new AssetGetInfoRequest();
         request.setAddress(address);
         request.setCode(code);

@@ -21,7 +21,7 @@ import org.junit.Test;
  * @Date 2018/7/12 11:38
  */
 public class OfflineSignatureDemo {
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     /**
      * @Description 1. Generating transaction Blob in a network environment
@@ -34,7 +34,7 @@ public class OfflineSignatureDemo {
     @Test
     public void Online_BuildTransactionBlob() {
         // The account to send Gas
-        String senderAddresss = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddresss = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // The account to receive Gas
         String destAddress = "ZTX3PHy1PAhnik7dezcTJBwRwYneNDV61vPpC";
         // The amount to be sent
@@ -86,7 +86,7 @@ public class OfflineSignatureDemo {
         // Transaction Blob
         String transactionBlob = "0A246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370102118C0843D20E8073A56080712246275516E6E5545425245773268423670574847507A77616E5837643238786B364B566370522C0A24627551426A4A443142534A376E7A41627A6454656E416870466A6D7852564545746D78481080A9E08704";
         // The account private key to send Gas
-        String senderPrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
 
         // Sign transaction
         String signature = signTransaction(transactionBlob, senderPrivateKey);

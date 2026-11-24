@@ -14,7 +14,7 @@ import org.junit.Test;
  * @Date 2018/7/26 08:19
  */
 public class submitTransactionDemo {
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     /*
      * Get account nonce to start transaction
@@ -22,7 +22,7 @@ public class submitTransactionDemo {
     @Test
     public void getAccountNonce() {
         // Init request
-        String senderAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
 
@@ -43,7 +43,7 @@ public class submitTransactionDemo {
      */
     @Test
     public void buildOperation() {
-        String senderAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         String destAddress = "ZTX3FvZL6HKXVg6b4VyqrSWJRbny4jrCUje1k";
         Long amount = ToBaseUnit.ToUGas("10.9");
 
@@ -61,7 +61,7 @@ public class submitTransactionDemo {
     @Test
     public void buildTransactionBlob() {
         // Get the nonce above getAccountNonce interface
-        String senderAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
         AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
@@ -108,7 +108,7 @@ public class submitTransactionDemo {
     @Test
     public void signTransaction() {
         // Get the nonce above getAccountNonce interface
-        String senderAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
         AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
@@ -149,7 +149,7 @@ public class submitTransactionDemo {
         }
 
         // Init request
-        String senderPrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
         signRequest.setBlob(transactionBlob);
@@ -172,7 +172,7 @@ public class submitTransactionDemo {
     @Test
     public void broadcastTransaction() {
         // Get the nonce above getAccountNonce interface
-        String senderAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String senderAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         AccountGetNonceRequest getNonceRequest = new AccountGetNonceRequest();
         getNonceRequest.setAddress(senderAddress);
         AccountGetNonceResponse getNonceResponse = sdk.getAccountService().getNonce(getNonceRequest);
@@ -213,7 +213,7 @@ public class submitTransactionDemo {
         }
 
         // Get sign result above signTransaction interface
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
         signRequest.setBlob(transactionBlob);

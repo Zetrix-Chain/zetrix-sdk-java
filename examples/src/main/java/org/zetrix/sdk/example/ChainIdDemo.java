@@ -50,7 +50,7 @@ public class ChainIdDemo {
     }
 
     private void setDefaultConfigure() {
-        sdk = SDK.getInstance("http://192.168.10.100:19343");
+        sdk = SDK.getInstance("https://test-node.zetrix.com");
     }
 
     /*
@@ -73,9 +73,9 @@ public class ChainIdDemo {
     private void sendGas() {
         // Init variable
         // The account private key to send gas
-        String senderPrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
         // The account address to receive gas
-        String destAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String destAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // The amount to be sent
         Long amount = ToBaseUnit.ToUGas("0.01");
         // The fixed write 1000L, the unit is UGas

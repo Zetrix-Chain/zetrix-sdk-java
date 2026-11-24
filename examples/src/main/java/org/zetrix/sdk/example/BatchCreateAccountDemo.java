@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import org.zetrix.SDK;
 import org.zetrix.common.ToBaseUnit;
 import org.zetrix.crypto.Keypair;
+import org.zetrix.encryption.model.KeyType;
 import org.zetrix.model.request.TransactionBuildBlobRequest;
 import org.zetrix.model.request.TransactionSignRequest;
 import org.zetrix.model.request.TransactionSubmitRequest;
@@ -19,7 +20,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BatchCreateAccountDemo {
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
+
+    /** Generate keypairs for all supported algorithms. */
+    @Test
+    public void generateMultiAlgorithmKeypairs() {
+        for (KeyType keyType : new KeyType[]{KeyType.ED25519, KeyType.SM2, KeyType.DILITHIUM3, KeyType.HYBRID}) {
+            Keypair keypair = Keypair.generator(keyType);
+            System.out.println(keyType + " address:    " + keypair.getAddress());
+            System.out.println(keyType + " publicKey:  " + keypair.getPublicKey());
+            System.out.println(keyType + " privateKey: " + keypair.getPrivateKey());
+            System.out.println();
+        }
+    }
+
     /**
      * 批量创建账户
      *
@@ -28,9 +42,9 @@ public class BatchCreateAccountDemo {
    @Test
     public void createZTXChainAccount(){
         // 推荐人账户地址
-        String refereeAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String refereeAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // 推荐人账户私钥
-        String refereePrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String refereePrivateKey = "YOUR_PRIVATE_KEY";
 
         // 推荐人账户nonce
         // TODO 需要查询当前推荐人的nonce值

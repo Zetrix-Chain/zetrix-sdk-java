@@ -54,7 +54,10 @@ public enum OperationType {
     CONTRACT_INVOKE_BY_GAS(15),
 
     // Create log
-    LOG_CREATE(16),;
+    LOG_CREATE(16),
+
+    // Upgrade contract
+    CONTRACT_UPGRADE(17),;
 
     private final int value;
 

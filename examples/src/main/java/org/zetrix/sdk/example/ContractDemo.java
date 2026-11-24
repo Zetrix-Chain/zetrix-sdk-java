@@ -16,7 +16,7 @@ import org.junit.Test;
  * @Date 2018/8/6 20:52
  */
 public class ContractDemo {
-    SDK sdk = SDK.getInstance("http://192.168.10.100:19343");
+    SDK sdk = SDK.getInstance("https://test-node.zetrix.com");
 
     /**
      * Check whether the contract is valid
@@ -25,7 +25,7 @@ public class ContractDemo {
     public void checkContractValid() {
         // Init request
         ContractCheckValidRequest request = new ContractCheckValidRequest();
-        request.setContractAddress("ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3");
+        request.setContractAddress("ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T");
 
         // Call checkValid
         ContractCheckValidResponse response = sdk.getContractService().checkValid(request);
@@ -44,7 +44,7 @@ public class ContractDemo {
     public void getContractInfo() {
         // Init request
         ContractGetInfoRequest request = new ContractGetInfoRequest();
-        request.setContractAddress("ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3");
+        request.setContractAddress("ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T");
 
         // Call getInfo
         ContractGetInfoResponse response = sdk.getContractService().getInfo(request);
@@ -81,9 +81,9 @@ public class ContractDemo {
     public void callContract() {
         // Init variable
         // Contract address
-        String contractAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String contractAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // Spender address
-        String spender = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String spender = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // Amount
         String amount = "1000000";
 
@@ -118,7 +118,7 @@ public class ContractDemo {
     @Test
     public void createContract() {
         // The account private key to create contract
-        String createPrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String createPrivateKey = "YOUR_PRIVATE_KEY";
         // Contract account initialization Gas，the unit is UGas，and 1 Gas = 10^8 UGas
         Long initBalance = 100000000L;//ToBaseUnit.ToUGas("0.1");
         // Contract code
@@ -159,13 +159,13 @@ public class ContractDemo {
     public void invokeContractByAsset() {
         // Init variable
         // The account private key to invoke contract
-        String invokePrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String invokePrivateKey = "YOUR_PRIVATE_KEY";
         // The account to receive the assets
-        String destAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String destAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // The asset code to be sent
         String assetCode = "TST";
         // The account address to issue asset
-        String assetIssuer = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String assetIssuer = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // 0 means that the contract is only triggered
         Long amount = 0L;
         // The fixed write 1000L, the unit is UGas
@@ -206,9 +206,9 @@ public class ContractDemo {
     public void invokeContractByGas() {
         // Init variable
         // The account private key to invoke contract
-        String invokePrivateKey = "privBwYirzSUQ7ZhgLbDpRXC2A75HoRtGAKSF76dZnGGYXUvHhCK4xuz";
+        String invokePrivateKey = "YOUR_PRIVATE_KEY";
         // The account to receive the Gas
-        String destAddress = "ZTX3Ta7d4GyAXD41H2kFCTd2eXhDesM83rvC3";
+        String destAddress = "ZTX3ag1AT3JHSkTr3XTfnuhwHgtJ88z3SxY8T";
         // 0 means that the contract is only triggered
         Long amount = 0L;
         // The fixed write 1000L, the unit is UGas
