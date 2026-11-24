@@ -1,6 +1,9 @@
 # Changelog — zetrix-sdk-java
 
-## [Unreleased]
+## [1.1.2] — 2026-11-24
+
+### Changed
+- Depends on `zetrix-encryption` 1.2.1.RELEASE, which fixes private key error messages, SM2 signature length checks and private key loading checks. Upgrade both together.
 
 ### Fixed
 - **Contract upgrade with only the payload or only the owner.** `ContractUpgradeOperation` with `sPayload` but no owner (or `sOwner` but no payload) failed with a generic `SYSTEM_ERROR` (20000), because both values were always written to the operation and an unset one is `null`. Only the flagged values are now checked and written.

@@ -22,7 +22,7 @@ Java SDK for the Zetrix blockchain. Supports account management, transaction bui
 <dependency>
   <groupId>org.zetrix.sdk</groupId>
   <artifactId>zetrix-sdk</artifactId>
-  <version>1.1.1.RELEASE</version>
+  <version>1.1.2.RELEASE</version>
 </dependency>
 ```
 
