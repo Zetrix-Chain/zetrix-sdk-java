@@ -313,6 +313,14 @@ public enum SdkError {
      */
     OWNER_NULL_ERROR(11078, "owner parameter cannot be null"),
     /*
+     * INVALID_CONTRACT_OWNER_ERROR
+     */
+    INVALID_CONTRACT_OWNER_ERROR(11079, "Invalid contract owner address"),
+    /*
+     * INVALID_EVALUATE_FEE_INPUT_ERROR
+     */
+    INVALID_EVALUATE_FEE_INPUT_ERROR(11080, "Use one fee estimation input: transactionBlob (with optional signatures), signatureKeys, or operations with signatureNumber"),
+    /*
      * CONNECTN_BLOCKCHAIN_ERROR
      */
     CONNECTN_BLOCKCHAIN_ERROR(19999, "Failed to connect blockchain"),

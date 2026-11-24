@@ -203,10 +203,18 @@ public class TransactionServiceImpl implements TransactionService {
 
             String prebuiltBlob = req.getTransactionBlob();
             String[] signatureKeys = req.getSignatureKeys();
+            boolean hasBlob = !Tools.isEmpty(prebuiltBlob);
+            boolean hasKeys = !Tools.isEmpty(signatureKeys);
+            // Reject requests that mix inputs from different scenarios instead of silently
+            // picking one: a blob with keys or operations, or signatures without a blob.
+            if ((hasBlob && (hasKeys || !Tools.isEmpty(req.getOperations())))
+                    || (!hasBlob && !Tools.isEmpty(req.getSignatures()))) {
+                throw new SDKException(SdkError.INVALID_EVALUATE_FEE_INPUT_ERROR);
+            }
 
-            if (!Tools.isEmpty(prebuiltBlob)) {
+            if (hasBlob) {
                 response = evaluateFeeWithPrebuiltBlob(prebuiltBlob, req.getSignatures());
-            } else if (!Tools.isEmpty(signatureKeys)) {
+            } else if (hasKeys) {
                 result = evaluateFeeWithSignatureKeys(req, signatureKeys);
                 response.buildResponse(SdkError.SUCCESS, result);
             } else {
@@ -238,6 +246,8 @@ public class TransactionServiceImpl implements TransactionService {
         if (!PublicKey.isAddressValid(req.getSourceAddress())) throw new SDKException(SdkError.INVALID_SOURCEADDRESS_ERROR);
         Long nonce = req.getNonce();
         if (Tools.isEmpty(nonce) || nonce < 1) throw new SDKException(SdkError.INVALID_NONCE_ERROR);
+        Long ceilLedgerSeq = req.getCeilLedgerSeq();
+        if (!Tools.isEmpty(ceilLedgerSeq) && ceilLedgerSeq < 0) throw new SDKException(SdkError.INVALID_CEILLEDGERSEQ_ERROR);
         if (Tools.isEmpty(req.getOperations())) throw new SDKException(SdkError.OPERATIONS_EMPTY_ERROR);
         for (String key : signatureKeys) {
             if (!PrivateKey.isPrivateKeyValid(key)) throw new SDKException(SdkError.PRIVATEKEY_ONE_ERROR);
@@ -249,12 +259,16 @@ public class TransactionServiceImpl implements TransactionService {
         Signature[] tempSigs = signBlobBytes(tempBlobBytes, signatureKeys);
         TransactionEvaluateFeeResponse feeResponse = postBlobToTestTransaction(
                 HexFormat.byteToHex(tempBlobBytes), tempSigs);
+        // The node reports a failed test run (for example a missing account or a failing
+        // contract call) with a non-zero error_code. Return that error, not a fee estimate.
+        Integer nodeErrorCode = feeResponse.getErrorCode();
+        if (nodeErrorCode != null && nodeErrorCode != 0) {
+            throw new SDKException(nodeErrorCode, feeResponse.getErrorDesc());
+        }
         TestTx[] txs = feeResponse.getResult() != null ? feeResponse.getResult().getTxs() : null;
         if (Tools.isEmpty(txs) || txs[0].getTransactionEnv() == null
                 || txs[0].getTransactionEnv().getTransactionFees() == null) {
-            String nodeError = (feeResponse.getErrorCode() != 0)
-                    ? " [node error " + feeResponse.getErrorCode() + ": " + feeResponse.getErrorDesc() + "]" : "";
-            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), "Fee estimation failed" + nodeError);
+            throw new SDKException(SdkError.SYSTEM_ERROR.getCode(), "Fee estimation failed: the node returned no fee");
         }
         Long estimatedFeeLimit = txs[0].getTransactionEnv().getTransactionFees().getFeeLimit();
         Long estimatedGasPrice = txs[0].getTransactionEnv().getTransactionFees().getGasPrice();

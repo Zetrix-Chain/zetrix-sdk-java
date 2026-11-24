@@ -37,7 +37,7 @@ public class TransactionService {
 
         TransactionSignRequest  signRequest = new TransactionSignRequest();
         signRequest.setBlob(buildBlobResponse.getResult().getTransactionBlob());
-        String[] privateKeys = new String[]{"privBxGeMBaXMfomHDzeJrNb7dc5f7XSc9WaKHNksafaASsgmY5daN4R","YOUR_PRIVATE_KEY"};
+        String[] privateKeys = new String[]{"YOUR_PRIVATE_KEY","YOUR_PRIVATE_KEY"};
         signRequest.setPrivateKeys(privateKeys);
         TransactionSignResponse signResponse = sdk.getTransactionService().sign(signRequest);
 

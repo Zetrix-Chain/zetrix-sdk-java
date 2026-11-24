@@ -96,6 +96,9 @@ public class ContractServiceImpl implements ContractService {
             contract.setPayload(payload);
             String owner = contractCreateOperation.getOwner();
             if (!Tools.isEmpty(owner)) {
+                if (!PublicKey.isAddressValid(owner)) {
+                    throw new SDKException(SdkError.INVALID_CONTRACT_OWNER_ERROR);
+                }
                 contract.setOwner(owner);
             }
             Chain.AccountPrivilege.Builder accountPrivilege = operationCreateContract.getPrivBuilder();
@@ -252,14 +255,19 @@ public class ContractServiceImpl implements ContractService {
                 throw new SDKException(SdkError.S_PAYLOAD_S_OWNER_NULL_ERROR);
             }
 
+            // Payload and owner can be changed separately: only the ones flagged with
+            // sPayload / sOwner are checked and written to the operation.
             String payload = contractUpgradeOperation.getPayload();
-            if (sPayload && Tools.isNULL(payload)) {
+            if (sPayload && Tools.isEmpty(payload)) {
                 throw new SDKException(SdkError.PAYLOAD_EMPTY_ERROR);
             }
 
             String owner = contractUpgradeOperation.getOwner();
             if (sOwner && Tools.isNULL(owner)) {
                 throw new SDKException(SdkError.OWNER_NULL_ERROR);
+            }
+            if (sOwner && !owner.isEmpty() && !PublicKey.isAddressValid(owner)) {
+                throw new SDKException(SdkError.INVALID_CONTRACT_OWNER_ERROR);
             }
             String metadata = contractUpgradeOperation.getMetadata();
             if (!checkContractValid(contractAddress)) {
@@ -277,10 +285,14 @@ public class ContractServiceImpl implements ContractService {
 
             Chain.OperationUpgradeContract.Builder operationUpgrade = operation.getUpgradeContractBuilder();
             operationUpgrade.setDestAddress(contractAddress);
-            operationUpgrade.setPayload(payload);
             operationUpgrade.setSPayload(sPayload);
+            if (sPayload) {
+                operationUpgrade.setPayload(payload);
+            }
             operationUpgrade.setSOwner(sOwner);
-            operationUpgrade.setOwner(owner);
+            if (sOwner) {
+                operationUpgrade.setOwner(owner);
+            }
 
         } catch (SDKException sdkException) {
             throw sdkException;

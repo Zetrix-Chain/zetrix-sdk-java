@@ -1,5 +1,21 @@
 # Changelog — zetrix-sdk-java
 
+## [Unreleased]
+
+### Fixed
+- **Contract upgrade with only the payload or only the owner.** `ContractUpgradeOperation` with `sPayload` but no owner (or `sOwner` but no payload) failed with a generic `SYSTEM_ERROR` (20000), because both values were always written to the operation and an unset one is `null`. Only the flagged values are now checked and written.
+- Contract owner addresses are validated: `ContractCreateOperation.owner` and `ContractUpgradeOperation.owner` (when `sOwner` is set and the owner is not empty) must be valid addresses, otherwise `INVALID_CONTRACT_OWNER_ERROR` (11079). An upgrade with `sPayload` set now also rejects an empty payload (`PAYLOAD_EMPTY_ERROR`), not only `null`.
+- `evaluateFee` with `signatureKeys` (Scenario 1) returns the node's error code and description when the test transaction fails (for example `103` for a missing source account), instead of continuing with the fee estimate. It also rejects a negative `ceilLedgerSeq` (`INVALID_CEILLEDGERSEQ_ERROR`), as the `signatureNumber` path already did.
+- `evaluateFee` rejects requests that mix inputs from different scenarios with `INVALID_EVALUATE_FEE_INPUT_ERROR` (11080): a `transactionBlob` together with `signatureKeys` or `operations`, or `signatures` without a `transactionBlob`. Previously one input was picked silently and the rest ignored.
+
+### Changed
+- Examples: the remaining hard-coded private keys in `DigitalAssetsDemo`, `submitTransactionDemo` and the `TransactionService` test are replaced with `YOUR_PRIVATE_KEY`.
+
+### Added
+- `ContractUpgradeAndFeeTest` — contract upgrade operation building and fee estimation input handling, against a local stand-in node.
+
+---
+
 ## [1.1.1] — 2026-11-20
 
 ### Security

@@ -213,7 +213,7 @@ public class submitTransactionDemo {
         }
 
         // Get sign result above signTransaction interface
-        String senderPrivateKey = "privbyQCRp7DLqKtRFCqKQJr81TurTqG6UKXMMtGAmPG3abcM9XHjWvq";
+        String senderPrivateKey = "YOUR_PRIVATE_KEY";
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest signRequest = new TransactionSignRequest();
         signRequest.setBlob(transactionBlob);
